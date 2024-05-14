@@ -30,7 +30,9 @@ public class Pawn {
         isDead = true;
     }
 
-    public void move(){};
+    public void move(){
+
+    };
     public boolean isWhite() {
         return isWhite;
     }

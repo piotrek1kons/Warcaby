@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.checkers.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: EE85B5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="267.0" style="-fx-background-color: CA61C3;">
+         <children>
+            <Label alignment="CENTER" layoutX="28.0" layoutY="247.0" prefHeight="44.0" prefWidth="211.0" text="WELCOME TO" textFill="#fdfffc">
+               <font>
+                  <Font name="Elephant" size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="243.0" fitWidth="249.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../TLO.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Button layoutX="368.0" layoutY="176.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="95.0" style="-fx-background-color: CA61C3;" text="ZALOGUJ" textFill="#fdfffc">
+         <font>
+            <Font name="Century Gothic" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="368.0" layoutY="215.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="95.0" style="-fx-background-color: CA61C3;" text="ZAREJESTRUJ" textFill="#fdfffc">
+         <font>
+            <Font name="Century Gothic" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
