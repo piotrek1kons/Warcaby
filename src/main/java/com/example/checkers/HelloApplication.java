@@ -19,7 +19,7 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         Board b = new Board();
-        b.setBoard();
+       // b.setBoard();
         b.showBoard();
 
         launch();
