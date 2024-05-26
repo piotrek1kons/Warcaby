@@ -18,9 +18,11 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        Board b = new Board();
+        //Board b = new Board();
        // b.setBoard();
-        b.showBoard();
+        //b.showBoard();
+
+        // TODO tu powinien być odpalany serwer
 
         launch();
     }

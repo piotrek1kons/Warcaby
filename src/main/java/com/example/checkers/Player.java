@@ -4,17 +4,17 @@ public class Player {
     private User user;
     private int points;
     private boolean isWhite;
-    private boolean isTurn;
+    //private boolean isTurn;
 
     public Player(User user, boolean isWhite){
         this.user = user;
         this.isWhite = isWhite;
 
-        if (this.isWhite){
-            isTurn = true;
-        } else {
-            isTurn = false;
-        }
+        //if (this.isWhite){
+        //    isTurn = true;
+        //} else {
+        //    isTurn = false;
+        //}
     }
 
 
@@ -38,7 +38,7 @@ public class Player {
     public int getPoints(){
         return points;
     }
-    public boolean getTurn(){
-        return isTurn;
-    }
+    //public boolean getTurn(){
+    //    return isTurn;
+    //}
 }
