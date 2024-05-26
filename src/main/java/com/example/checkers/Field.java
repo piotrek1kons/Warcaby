@@ -8,6 +8,8 @@ public class Field {
         this.isWhite = isWhite;
     }
 
+
+    // TODO --------- GETTERY I SETTERY ---------
     public void setPawn(Pawn pawn){
         this.pawn = pawn;
     }

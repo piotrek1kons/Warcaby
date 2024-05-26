@@ -1,13 +1,10 @@
 package com.example.checkers;
 
-public class Queen {
-    private boolean isWhite;
+public class Queen extends Pawn {
 
-    public Queen(boolean isWhite){
-        this.isWhite = isWhite;
+    public Queen(Pawn pawn) {
+        super(pawn.isWhite(), pawn.getCh(), pawn.getY());
+        super.setQueen(true);
     }
-
-
-    // TODO ruchy królowej
 
 }

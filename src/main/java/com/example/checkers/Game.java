@@ -16,5 +16,8 @@ public class Game {
     }
 
 
+    // TODO --------- GETTERY I SETTERY ---------
+
+
 
 }
