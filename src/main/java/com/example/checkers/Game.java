@@ -17,7 +17,7 @@ public class Game implements Callable<Boolean>  {
 */
 
     public Game(RuchGraczaThread player1, RuchGraczaThread player2){
-        ServerCondition sc = new ServerCondition();
+        ServerCondition sc = new ServerCondition(new Board());
         this.player1 = player1;
         this.player2 = player2;
 
@@ -27,9 +27,6 @@ public class Game implements Callable<Boolean>  {
     public Boolean call(){
 
         try {
-            Board b = new Board();
-            player1.setBoard(b);
-            player2.setBoard(b);
 
             player1.call();
             player2.call();

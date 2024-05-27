@@ -44,16 +44,13 @@ public class Server {
                 if (waitingPlayers.size() == 2){
                     // TODO jeżeli coś by nie działało to sprawdzić czy nie zwraca 2 razy tego samego wątku
 
-                    ServerCondition sc = new ServerCondition(new Board());
+                    //ServerCondition sc = new ServerCondition(new Board());
 
                     RuchGraczaThread temp1 = waitingPlayers.poll();
                     RuchGraczaThread temp2 = waitingPlayers.poll();
 
                     temp1.setIsWhite(true);
                     temp2.setIsWhite(false);
-
-                    temp1.setServerCondition(sc);
-                    temp2.setServerCondition(sc);
 
                     Game game = new Game(temp1,temp2);
                     exec.submit(new FutureTask<>(game){
