@@ -6,12 +6,16 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class StartingWindowController
+{
     @FXML
     private Button signUpButton;
+    @FXML
     private Button logInButton;
 
+    @FXML
     public void signUpButtonOnAction(ActionEvent event){
+        System.out.println("Sign up button");
         Stage stage = (Stage) signUpButton.getScene().getWindow();
         stage.close();
     }
@@ -19,7 +23,10 @@ public class HelloController {
 
 
     @FXML
-    protected void onHelloButtonClick() {
-        //welcomeText.setText("Welcome to JavaFX Application!");
+    public void logInButtonOnAction(ActionEvent event) {
+        System.out.println("Log in button");
+        Stage stage = (Stage) logInButton.getScene().getWindow();
+        stage.close();
     }
+
 }
