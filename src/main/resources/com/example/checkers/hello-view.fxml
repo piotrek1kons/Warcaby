@@ -29,7 +29,7 @@
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="257.0" style="-fx-background-color: F4A4B4;">
          <children>
-            <Button fx:id="signUpButton" layoutX="70.0" layoutY="199.0" mnemonicParsing="false" onAction="#signUpButtonOnAction" prefHeight="47.0" prefWidth="156.0" style="-fx-background-color: #559CAD;" textFill="#fbf3e4">
+            <Button fx:id="signUpButton" layoutX="70.0" layoutY="199.0" mnemonicParsing="false" onAction="#signUpButtonOnAction" prefHeight="47.0" prefWidth="156.0" style="-fx-background-color: #559CAD; -fx-cursor: hand;" textFill="#fbf3e4">
                <font>
                   <Font name="Sitka Text" size="24.0" />
                </font>
@@ -41,7 +41,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="logInButton" layoutX="70.0" layoutY="280.0" mnemonicParsing="false" onAction="#logInButtonOnAction" prefHeight="47.0" prefWidth="156.0" style="-fx-background-color: #559CAD;" textFill="#fbf3e4">
+            <Button fx:id="logInButton" layoutX="70.0" layoutY="280.0" mnemonicParsing="false" onAction="#logInButtonOnAction" prefHeight="47.0" prefWidth="156.0" style="-fx-background-color: #559CAD; -fx-cursor: hand;" textFill="#fbf3e4">
                <font>
                   <Font name="Sitka Text" size="24.0" />
                </font>
