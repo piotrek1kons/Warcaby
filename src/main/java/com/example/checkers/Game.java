@@ -25,8 +25,6 @@ public class Game implements Callable<Boolean>  {
         final Player[] playersResult = new Player[2];
 
         try {
-            player1.call();
-            player2.call();
             exec.submit(new FutureTask<>(player1){
                 protected void done(){
                     try{

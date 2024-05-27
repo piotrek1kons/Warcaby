@@ -101,4 +101,15 @@ public class Board {
             System.out.println();
         }
     }
+
+    // TODO --------- GETTERY I SETTERY ---------
+    public int getWidth(){
+        return width;
+    }
+    public Character getHeight(){
+        return height;
+    }
+    public HashMap<Character,HashMap<Integer,Field>> getBoard(){
+        return board;
+    }
 }

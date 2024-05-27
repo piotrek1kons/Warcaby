@@ -100,4 +100,7 @@ public class Pawn {
     public void setQueen(boolean isQueen){
         this.isQueen = isQueen;
     }
+    public boolean getIsQueen(){
+        return isQueen;
+    }
 }

@@ -16,7 +16,6 @@ public class RuchGraczaThread implements Callable<Player> {
     private Board board;
 
     public RuchGraczaThread(Socket socket){
-        //this.serverCondition = sc;
         this.socket = socket;
 
         try {
@@ -36,7 +35,7 @@ public class RuchGraczaThread implements Callable<Player> {
 
         board.showBoard();
 
-        serverCondition.wykonajRuch();
+        serverCondition.wykonajRuch(in, out);
 
         return player;
     }
