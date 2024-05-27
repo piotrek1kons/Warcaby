@@ -30,23 +30,71 @@ public class ServerCondition {
 
             // TODO serwer pobiera ruch od klienta i aktualizuje wszystkie pola (Board i punkty użykownika)
             // TODO serwer wysyła zaaktualizowane dane do klienta, u każdego klienta plansza rysuje się osobno
+            // wysłanie aktualizacji tablicy
             String[] msg = boardToString();
-            for (int i=0; i<msg.length; i++){
-                out.write(msg[i]);
-                out.newLine();
-                out.flush();
-            }
+            wyslanieTablicy(msg, out);
 
             // TODO serwer pobiera ruch od klienta
-            String odpowiedz = in.readLine();
+            // wybranie pionka do ruszenia
+            String[] odpowiedz = in.readLine().split(";");  // CH;Y
+            Character ch = odpowiedz[0].charAt(0);
+            int y = Integer.parseInt(odpowiedz[1]);
 
             // wyświetlenie możliwych ruchów
+            HashMap<Character,HashMap<Integer,Field>> b = board.getBoard();
+            Field f = b.get(ch).get(y);
+            String[] nextMove = f.getPawn().nextMove(false);
+
+            // wysłanie listy do klienta
+            wyslanieTablicy(nextMove, out);
+
+            // odebranie nowego ruchu od klienta
+            odpowiedz = in.readLine().split(";");  // CH;Y
+            ch = odpowiedz[0].charAt(0);
+            y = Integer.parseInt(odpowiedz[1]);
 
             // wykonanie ruchu
+            f.getPawn().move(ch,y);
+
+            // wysłanie aktualizacji tablicy
+            msg = boardToString();
+            wyslanieTablicy(msg, out);
 
             // sprawdzenie czy jest możliwy kolejny ruch
-            // jeśli tak to wykonanie kolejnego ruchu
-            // jeśli nie -> idzie dalej
+            f = b.get(ch).get(y);
+            nextMove = f.getPawn().nextMove(true);
+
+            while (nextMove != null){
+                out.write("NEXT");  // klient ma znowu odebrać kolejny ruch
+                out.newLine();
+                out.flush();
+
+                // wysłanie listy do klienta
+                wyslanieTablicy(nextMove, out);
+
+                // odebranie nowego ruchu od klienta
+                odpowiedz = in.readLine().split(";");  // CH;Y
+                ch = odpowiedz[0].charAt(0);
+                y = Integer.parseInt(odpowiedz[1]);
+
+                // wykonanie ruchu
+                f.getPawn().move(ch,y);
+
+                // wysłanie aktualizacji tablicy
+                msg = boardToString();
+                wyslanieTablicy(msg, out);
+
+                // sprawdzenie czy jest możliwy kolejny ruch
+                f = b.get(ch).get(y);
+                nextMove = f.getPawn().nextMove(true);
+
+            }
+
+
+            // jeśli nie ma ruchu -> idzie dalej
+            out.write("STOP");  // koniec ruchu użytkownika
+            out.newLine();
+            out.flush();
 
             // TODO flaga zmienia się w momencie jak gracz skończy wykonywać swój ruch
             doesSomeonePlay = false;
@@ -57,6 +105,17 @@ public class ServerCondition {
             throw new RuntimeException(e);
         } finally {
             lock.unlock();
+        }
+    }
+
+    public void wyslanieTablicy(String[] arr, BufferedWriter out) throws IOException {
+        out.write("" + arr.length);
+        out.newLine();
+        out.flush();
+        for (int i=0; i<arr.length; i++){
+            out.write(arr[i]);
+            out.newLine();
+            out.flush();
         }
     }
 

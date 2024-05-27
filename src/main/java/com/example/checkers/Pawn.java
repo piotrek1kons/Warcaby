@@ -23,7 +23,9 @@ public class Pawn {
         isDead = true;
     }
 
-    // TODO to chyba można zrobić inaczej
+    // TODO ta funkcja poza ruchem powinna też wykonywać bicie pionków (jeżeli taka sytuacja zaistniała)
+    // TODO możemy określić ile pkt gracz dostanie za zbicie pionka (maybe 10??) i na podstawie liczby punktów określimy
+    // TODO kto wygrał w danej rundzie (max punktów -> gra się zakończy)
     public void move(Character ch, int y){
         this.ch = ch;
         this.y = y;
@@ -43,8 +45,10 @@ public class Pawn {
         return true;
     }
 
-    public void nextMove(){
-        boolean firstKill = false;
+    // TODO powinno zwracać listę możliwych ruchów żeby można było wysłać ją do klienta w stringu
+    // TODO wystarczy na jedno sprawdzenie, ta funkcja będzie w pętli while w wątku
+    public String[] nextMove(boolean firstKill){
+        //boolean firstKill = false;
         Character chp = getCh();
         int yp = getY();
         if(isWhite){
@@ -85,6 +89,9 @@ public class Pawn {
         }else{
 
         }
+
+        // TODO jeśli nie ma następnego ruchu to niech zwróci NULL
+        return null;
     }
 
     // TODO --------- GETTERY I SETTERY ---------

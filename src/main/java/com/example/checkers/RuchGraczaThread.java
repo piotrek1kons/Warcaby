@@ -35,6 +35,11 @@ public class RuchGraczaThread implements Callable<Player> {
 
         board.showBoard();
 
+        // TODO gra się zakończy gdy gracz otrzyma max punktów lub upłynie czas poświęcony na grę
+        // TODO (np 30 minut - maybe jakieś odliczanie po stronie klienta ?? )
+        // TODO Also użytkownik powinien mieć czas na odpowiedź (może też odliczanie po stronie klienta? wtedy można by było
+        // TODO przerwać odpowiedź)
+        // TODO Wątek z odliczaniem na kliencie
         serverCondition.wykonajRuch(in, out);
 
         return player;
