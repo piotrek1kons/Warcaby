@@ -6,6 +6,9 @@ public class Pawn {
     private boolean isQueen;
     private Character ch;
     private Integer y;
+    private int width = 8;
+    private Character height = 'H';
+
 
     public Pawn(boolean isWhite, Character ch, Integer y){
             this.isWhite = isWhite;
@@ -26,6 +29,63 @@ public class Pawn {
         this.y = y;
     }
 
+
+    // sprawdza czy pole znajduje się na planszy
+    public boolean isOnBoard(Character chDirection, int yDirection){
+        if (chDirection <= 'A' || chDirection > height) {
+            return false;
+        }
+
+        if (yDirection <= 0 || yDirection > width){
+            return false;
+        }
+
+        return true;
+    }
+
+    public void nextMove(){
+        boolean firstKill = false;
+        Character chp = getCh();
+        int yp = getY();
+        if(isWhite){
+            if(isOnBoard(chp--, yp - 1)){
+                chp++;
+                //sprawdzic czy pole wolne
+                    //podswietlenie
+                //inaczej sprawdza kolor
+                    // i sprawdza nastepne pole na skos i czy jest wolne
+                    // podswietlanie
+            }else if(isOnBoard(chp--, yp + 1)){
+                chp++;
+                //sprawdzic czy pole wolne
+                    //podswietlenie
+                //inaczej sprawdza kolor
+                    // i sprawdza nastepne pole na skos i czy jest wolne
+                    // podswietlanie
+            }
+        }else {
+            if (isOnBoard(chp++, yp - 1)) {
+                chp++;
+                //sprawdzic czy pole wolne
+                    //podswietlenie
+                //inaczej sprawdza kolor
+                    // i sprawdza nastepne pole na skos i czy jest wolne
+                    // podswietlanie
+            } else if (isOnBoard(chp++, yp + 1)) {
+                chp++;
+                //sprawdzic czy pole wolne
+                    //podswietlenie
+                //inaczej sprawdza kolor
+                    // i sprawdza nastepne pole na skos i czy jest wolne
+                    // podswietlanie
+            }
+        }
+        if(firstKill) {
+
+        }else{
+
+        }
+    }
 
     // TODO --------- GETTERY I SETTERY ---------
     public boolean isWhite() {

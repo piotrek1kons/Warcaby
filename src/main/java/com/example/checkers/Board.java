@@ -36,18 +36,7 @@ public class Board {
         return true;
     }
 
-    // sprawdza czy pole znajduje się na planszy
-    public boolean isOnBoard(int chDirection, int yDirection){
-        if (chDirection <= 'A' || chDirection > height) {
-            return false;
-        }
 
-        if (yDirection <= 0 || yDirection > width){
-            return false;
-        }
-
-        return true;
-    }
 
 
     // TODO --------- ZMIANA PIONKA NA KRÓLOWĄ ---------
