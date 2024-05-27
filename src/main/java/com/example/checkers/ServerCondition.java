@@ -10,9 +10,14 @@ public class ServerCondition {
     private Lock lock = new ReentrantLock();
     private Condition player = lock.newCondition();
     private boolean doesSomeonePlay = true;
+    private Board board;
+
+    public ServerCondition(Board board){
+        this.board = board;
+    }
 
     // TODO
-    public void wykonajRuch(String line, String path){
+    public void wykonajRuch(){
         lock.lock();
         try{
             while(doesSomeonePlay){
@@ -22,12 +27,13 @@ public class ServerCondition {
             doesSomeonePlay = true;
 
 
+
             //BufferedWriter bw = new BufferedWriter(new FileWriter(path,true));
 
             //bw.write(line);
             //bw.newLine();
 
-            // TODO serwer pobiera ruch od klienta i aktualizuje wszystkie pola
+            // TODO serwer pobiera ruch od klienta i aktualizuje wszystkie pola (Board i punkty użykownika)
             // TODO serwer wysyła zaaktualizowane dane do klienta, u każdego klienta plansza rysuje się osobno
 
 

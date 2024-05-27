@@ -12,6 +12,7 @@ public class RuchGraczaThread implements Callable<Boolean> {
     private BufferedReader in;
     private BufferedWriter out;
     private Boolean isTurn;
+    private Boolean isWhite;
     private Board board;
 
     public RuchGraczaThread(Socket socket){
@@ -29,13 +30,13 @@ public class RuchGraczaThread implements Callable<Boolean> {
     @Override
     public Boolean call() throws Exception {
 
-        // TODO pobranie od klienta loginu i hasła gracza
+        // TODO pobranie od klienta loginu i hasła gracza i utworzenie obiektu użytkownika
+        String[] daneUzytkownika = in.readLine().split(";");
+        player = new Player(new User(daneUzytkownika[0], Integer.parseInt(daneUzytkownika[1]), Integer.parseInt(daneUzytkownika[2]), Integer.parseInt(daneUzytkownika[3])),isWhite);
 
-        // TODO pobranie danych gracza z bazy i utworzenie obiektu użytkownika
 
-        // TODO można zobaczyć czy nie lepszym od Conditiona nie byłby Exchanger bo on 2 wątki obsługuje, ale
-        // TODO nie wiem co by miały wymieniać
 
+        serverCondition.wykonajRuch();
 
         return null;
     }
@@ -46,5 +47,8 @@ public class RuchGraczaThread implements Callable<Boolean> {
     }
     public void setBoard(Board b){
         this.board = b;
+    }
+    public void setIsWhite(Boolean isWhite){
+        this.isWhite = isWhite;
     }
 }

@@ -13,6 +13,13 @@ public class User {
         this.lost = 0;
     }
 
+    public User(String nick, int wins, int draws, int lost){
+        this.nick = nick;
+        this.wins = wins;
+        this.draws = draws;
+        this.lost = lost;
+    }
+
 
     // TODO --------- GETTERY I SETTERY ---------
     public void setWins(){
