@@ -13,6 +13,7 @@ public class StartingWindow extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(StartingWindow.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.setScene(scene);
+        stage.setTitle("Welcome!");
         stage.setResizable(false);
         stage.show();
     }

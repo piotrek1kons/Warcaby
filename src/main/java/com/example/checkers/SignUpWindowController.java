@@ -10,14 +10,15 @@ import javafx.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LogInWindowController implements Initializable {
+public class SignUpWindowController implements Initializable {
 
     @FXML
     private Button cancelButton;
     @FXML
-    private Button logInButton1;
+    private Button signUpButton;
     @FXML
     private Label warningLabel;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -22,4 +22,6 @@ public class DBUtils {
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
+
+    //public static void signUpUser(ActionEvent event, String username, String password, String )
 }

@@ -24,8 +24,7 @@ public class StartingWindowController implements Initializable
     @FXML
     public void signUpButtonOnAction(ActionEvent event){
         System.out.println("Sign up button");
-        Stage stage = (Stage) signUpButton.getScene().getWindow();
-        stage.close();
+        DBUtils.changeScene(event, "signUpWindowGUI.fxml", "Sign Up!");
     }
 
     @FXML
