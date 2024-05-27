@@ -44,20 +44,17 @@ public class Server {
                 if (waitingPlayers.size() == 2){
                     // TODO jeżeli coś by nie działało to sprawdzić czy nie zwraca 2 razy tego samego wątku
 
-                    //ServerCondition sc = new ServerCondition(new Board());
-
-                    RuchGraczaThread temp1 = waitingPlayers.poll();
-                    RuchGraczaThread temp2 = waitingPlayers.poll();
-
-                    temp1.setIsWhite(true);
-                    temp2.setIsWhite(false);
-
-                    Game game = new Game(temp1,temp2);
+                    Game game = new Game(waitingPlayers.poll(),waitingPlayers.poll());
                     exec.submit(new FutureTask<>(game){
                         protected void done(){
                             try{
                                 // TODO może np. tu zwrócić wynik i wg niego dokonać zwiększenia się wygranych/przegranych usera
-                                get();
+                                boolean result = get();
+                                if (!result){
+                                    System.out.println("SOMETHING WENT WRONG");
+                                }
+
+
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             } catch (ExecutionException e) {

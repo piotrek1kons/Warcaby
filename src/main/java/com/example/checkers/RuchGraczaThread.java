@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.concurrent.Callable;
 
-public class RuchGraczaThread implements Callable<Boolean> {
+public class RuchGraczaThread implements Callable<Player> {
     private ServerCondition serverCondition;
     private Player player;
     private Socket socket;
@@ -28,17 +28,17 @@ public class RuchGraczaThread implements Callable<Boolean> {
         }
     }
     @Override
-    public Boolean call() throws Exception {
+    public Player call() throws Exception {
 
         // TODO pobranie od klienta loginu i hasła gracza i utworzenie obiektu użytkownika
         String[] daneUzytkownika = in.readLine().split(";");
         player = new Player(new User(daneUzytkownika[0], Integer.parseInt(daneUzytkownika[1]), Integer.parseInt(daneUzytkownika[2]), Integer.parseInt(daneUzytkownika[3])),isWhite);
 
-
+        board.showBoard();
 
         serverCondition.wykonajRuch();
 
-        return null;
+        return player;
     }
 
     // TODO --------- GETTERY I SETTERY ---------

@@ -9,12 +9,6 @@ public class Player {
     public Player(User user, boolean isWhite){
         this.user = user;
         this.isWhite = isWhite;
-
-        //if (this.isWhite){
-        //    isTurn = true;
-        //} else {
-        //    isTurn = false;
-        //}
     }
 
 
@@ -38,7 +32,7 @@ public class Player {
     public int getPoints(){
         return points;
     }
-    //public boolean getTurn(){
-    //    return isTurn;
-    //}
+    public User getUser(){
+        return user;
+    }
 }
