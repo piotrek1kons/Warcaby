@@ -43,7 +43,7 @@ public class ServerCondition {
             // wyświetlenie możliwych ruchów
             HashMap<Character,HashMap<Integer,Field>> b = board.getBoard();
             Field f = b.get(ch).get(y);
-            String[] nextMove = f.getPawn().nextMove(false);
+            String[] nextMove = f.getPawn().nextMove(false, board);
 
             // wysłanie listy do klienta
             wyslanieTablicy(nextMove, out);
@@ -62,7 +62,7 @@ public class ServerCondition {
 
             // sprawdzenie czy jest możliwy kolejny ruch
             f = b.get(ch).get(y);
-            nextMove = f.getPawn().nextMove(true);
+            nextMove = f.getPawn().nextMove(true, board);
 
             while (nextMove != null){
                 out.write("NEXT");  // klient ma znowu odebrać kolejny ruch
@@ -86,7 +86,7 @@ public class ServerCondition {
 
                 // sprawdzenie czy jest możliwy kolejny ruch
                 f = b.get(ch).get(y);
-                nextMove = f.getPawn().nextMove(true);
+                nextMove = f.getPawn().nextMove(true, board);
 
             }
 

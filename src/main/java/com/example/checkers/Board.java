@@ -27,14 +27,7 @@ public class Board {
     }
 
     // TODO --------- FUNKCJE SPRAWDZAJĄCE ---------
-    // sprawdza czy pole jest wolne
-    public boolean isFieldFree(Field field){
-        if (field.getPawn() != null){
-            return false;
-        }
 
-        return true;
-    }
 
 
 
@@ -111,5 +104,8 @@ public class Board {
     }
     public HashMap<Character,HashMap<Integer,Field>> getBoard(){
         return board;
+    }
+    public Field getField(Character ch, int y){
+        return board.get(ch).get(y);
     }
 }

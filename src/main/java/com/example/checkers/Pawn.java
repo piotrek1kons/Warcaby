@@ -1,5 +1,7 @@
 package com.example.checkers;
 
+import java.util.ArrayList;
+
 public class Pawn {
     private boolean isWhite;
     private boolean isDead;
@@ -31,6 +33,14 @@ public class Pawn {
         this.y = y;
     }
 
+    // sprawdza czy pole jest wolne
+    public boolean isFieldFree(Field field){
+        if (field.getPawn() != null){
+            return false;
+        }
+
+        return true;
+    }
 
     // sprawdza czy pole znajduje się na planszy
     public boolean isOnBoard(Character chDirection, int yDirection){
@@ -45,53 +55,102 @@ public class Pawn {
         return true;
     }
 
-    // TODO powinno zwracać listę możliwych ruchów żeby można było wysłać ją do klienta w stringu
-    // TODO wystarczy na jedno sprawdzenie, ta funkcja będzie w pętli while w wątku
-    public String[] nextMove(boolean firstKill){
-        //boolean firstKill = false;
-        Character chp = getCh();
-        int yp = getY();
-        if(isWhite){
-            if(isOnBoard(chp--, yp - 1)){
-                chp++;
-                //sprawdzic czy pole wolne
-                    //podswietlenie
-                //inaczej sprawdza kolor
-                    // i sprawdza nastepne pole na skos i czy jest wolne
-                    // podswietlanie
-            }else if(isOnBoard(chp--, yp + 1)){
-                chp++;
-                //sprawdzic czy pole wolne
-                    //podswietlenie
-                //inaczej sprawdza kolor
-                    // i sprawdza nastepne pole na skos i czy jest wolne
-                    // podswietlanie
-            }
-        }else {
-            if (isOnBoard(chp++, yp - 1)) {
-                chp++;
-                //sprawdzic czy pole wolne
-                    //podswietlenie
-                //inaczej sprawdza kolor
-                    // i sprawdza nastepne pole na skos i czy jest wolne
-                    // podswietlanie
-            } else if (isOnBoard(chp++, yp + 1)) {
-                chp++;
-                //sprawdzic czy pole wolne
-                    //podswietlenie
-                //inaczej sprawdza kolor
-                    // i sprawdza nastepne pole na skos i czy jest wolne
-                    // podswietlanie
+    public Character chIncerment(Character chp, int i){
+        return (chp == 1 ? chp++ : chp--);
+    }
+
+    public String checkKill(Character chp, int yp, int increment, Board board){
+        if (board.getField(chp, yp).getPawn().isWhite == this.isWhite) {
+
+            //koniec ruchu
+        } else{
+            if (isOnBoard(chIncerment(ch,increment), yp + increment)) {
+                //sprawdza czy pole jest wolne
+                if (isFieldFree(board.getField(chp, yp + increment))) {
+                    //zabicie pionka
+                    //podswietlenie pola
+                    return chp + ";" + (yp + increment);
+                } else {
+                    //koniec ruchu
+                }
+            }else{
+                //koniec ruchu
             }
         }
+        return null;
+    }
+
+    public String checkMove(Character chp, int yp, int increment, Board board){
+        //sprawdza czy pole znajduje sie na planszy
+        if(isOnBoard(chp, yp)) {
+            //sprawdza czy pole jest wolne
+            if (isFieldFree(board.getField(chp, yp))) {
+                return chp + ";" + yp;
+                //podswietlenia pola
+                //sprawdza kolor pionka na nastepnym polu
+            } else {
+                return checkKill(chp,yp,increment,board);
+            }
+        }else{
+            //koniec ruchu
+
+        }
+        return null;
+    }
+    // TODO powinno zwracać listę możliwych ruchów żeby można było wysłać ją do klienta w stringu
+    // TODO wystarczy na jedno sprawdzenie, ta funkcja będzie w pętli while w wątku
+    public ArrayList<String> nextMove(boolean firstKill, Board board){
+        //boolean firstKill = false;
+        Character chp = getCh();
+        ArrayList<String> moves = new ArrayList<String>();
+        String temp;
+        int yp = getY();
+
         if(firstKill) {
+            temp = checkMove(chp--,yp--,-1,board);
+            if(temp != null){
+                moves.add(temp);
+            }
+
+            temp = checkMove(chp--,yp++,1,board);
+            if(temp != null){
+                moves.add(temp);
+            }
+
+            temp = checkMove(chp++,yp++,1,board);
+            if(temp != null){
+                moves.add(temp);
+            }
+
+            temp = checkMove(chp++,yp--,1,board);
+            if(temp != null){
+                moves.add(temp);
+            }
 
         }else{
-
+            if(isWhite){
+                temp = checkMove(chp--,yp--,-1,board);
+                if(temp != null){
+                    moves.add(temp);
+                }
+                temp = checkMove(chp--,yp++,1,board);
+                if(temp != null){
+                    moves.add(temp);
+                }
+            }else {
+                temp = checkMove(chp++,yp--,-1,board);
+                if(temp != null){
+                    moves.add(temp);
+                }
+                temp = checkMove(chp++,yp++,1,board);
+                if(temp != null){
+                    moves.add(temp);
+                }
+            }
         }
 
         // TODO jeśli nie ma następnego ruchu to niech zwróci NULL
-        return null;
+        return moves;
     }
 
     // TODO --------- GETTERY I SETTERY ---------
