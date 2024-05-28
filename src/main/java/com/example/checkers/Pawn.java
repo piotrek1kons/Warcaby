@@ -99,7 +99,7 @@ public class Pawn {
     }
     // TODO powinno zwracać listę możliwych ruchów żeby można było wysłać ją do klienta w stringu
     // TODO wystarczy na jedno sprawdzenie, ta funkcja będzie w pętli while w wątku
-    public ArrayList<String> nextMove(boolean firstKill, Board board){
+    public String[] nextMove(boolean firstKill, Board board){
         //boolean firstKill = false;
         Character chp = getCh();
         ArrayList<String> moves = new ArrayList<String>();
@@ -149,8 +149,12 @@ public class Pawn {
             }
         }
 
+        String [] movesArray = new String[moves.size()];
+        for(int i = 0; i < moves.size(); i++){
+            movesArray[i] = moves.get(i);
+        }
         // TODO jeśli nie ma następnego ruchu to niech zwróci NULL
-        return moves;
+        return movesArray;
     }
 
     // TODO --------- GETTERY I SETTERY ---------

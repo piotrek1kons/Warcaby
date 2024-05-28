@@ -20,7 +20,7 @@ public class StartingWindow extends Application {
 
     public static void main(String[] args) {
         //Board b = new Board();
-       // b.setBoard();
+        //b.setBoard();
         //b.showBoard();
 
 
