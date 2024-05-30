@@ -54,7 +54,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="cancelButton" layoutX="99.0" layoutY="323.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: #559CAD; -fx-cursor: hand;">
+            <Button fx:id="cancelButton" layoutX="99.0" layoutY="320.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="106.0" style="-fx-background-color: #559CAD; -fx-cursor: hand;">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
                      <image>
