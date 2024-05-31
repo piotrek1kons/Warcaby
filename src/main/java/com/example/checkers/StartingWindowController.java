@@ -1,5 +1,6 @@
 package com.example.checkers;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -21,19 +22,20 @@ public class StartingWindowController implements Initializable
     @FXML
     private Button logInButton;
 
-    @FXML
-    public void signUpButtonOnAction(ActionEvent event){
-        System.out.println("Sign up button");
-        DBUtils.changeScene(event, "signUpWindowGUI.fxml", "Sign Up!");
-    }
-
-    @FXML
-    public void logInButtonOnAction(ActionEvent event) {
-        System.out.println("Log in button");
-        DBUtils.changeScene(event, "logInWindowGUI.fxml", "Log In!");
-    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        signUpButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene(event, "SignUpWindowGUI.fxml", "Sign Up!");
+            }
+        });
+        logInButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene(event, "LogInWindowGUI.fxml", "Log InWelcome!");
+            }
+        });
 
     }
 }

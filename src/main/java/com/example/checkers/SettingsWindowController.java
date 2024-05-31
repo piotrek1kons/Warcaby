@@ -5,27 +5,26 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-//klasa obsuguje okno z grą
-public class GameWindowController implements Initializable {
+//klasa obsługująca okno ustawień
+public class SettingsWindowController implements Initializable {
     @FXML
     private Button exitButton;
+
+    //nowe dane:
     @FXML
-    private Label username1Label;   //nazwa urzytkownika - trzeba będzie ustawić nazwe
+    private Field newUsernameButton;
     @FXML
-    private Label username2Label;   //nazwa urzytkownika - trzeba będzie ustawić nazwe
+    private Field newPasswordButton;
     @FXML
-    private Label whichPlayerLabel; //nazwa urzytkownika którego teraz jest tura - trzeba będzie zmieniac nazwe przy kazdej kolejce
-    @FXML
-    private Pane boardPane; //panel z planszą - będzie ciężko :(
+    private Field newConfirmPasswordButton;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -33,6 +32,6 @@ public class GameWindowController implements Initializable {
             }
         });
 
-        //tutaj można dodawać
+        //trzeba dodać ustawianie nowych danych
     }
 }

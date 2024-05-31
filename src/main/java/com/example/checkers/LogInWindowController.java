@@ -33,5 +33,7 @@ public class LogInWindowController implements Initializable {
                 DBUtils.changeScene(event, "hello-view.fxml", "Welcome!");
             }
         });
+
+        //tutaj można dodawać
     }
 }

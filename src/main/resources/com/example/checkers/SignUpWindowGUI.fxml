@@ -10,16 +10,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: FBF3E4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.checkers.SignUpWindowController">
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: FBF3E4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.checkers.SignUpWindowController">
    <items>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: FBF3E4;">
          <children>
-            <ImageView fitHeight="288.0" fitWidth="282.0" layoutX="36.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="411.0" fitWidth="358.0" layoutX="38.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@img/TLO.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="157.0" fitWidth="244.0" layoutX="30.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="257.0" fitWidth="327.0" layoutX="35.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@img/logo-napis.png" />
                </image>
@@ -28,52 +28,61 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: F4A4B4;">
          <children>
-            <ImageView fitHeight="97.0" fitWidth="67.0" layoutX="115.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="104.0" fitWidth="137.0" layoutX="146.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@img/kludka.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="72.0" layoutY="103.0" prefHeight="31.0" prefWidth="150.0" text="Username" textFill="#fbf3e4">
+            <Label alignment="CENTER" layoutX="96.0" layoutY="138.0" prefHeight="42.0" prefWidth="211.0" text="Username" textFill="#fbf3e4">
                <font>
-                  <Font name="Cooper Black" size="18.0" />
+                  <Font name="Cooper Black" size="36.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="64.0" layoutY="135.0" prefHeight="26.0" prefWidth="167.0" promptText="Username" />
-            <Label layoutX="98.0" layoutY="177.0" text="Password" textFill="#fbf3e4">
+            <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="95.0" layoutY="181.0" prefHeight="39.0" prefWidth="227.0" promptText="Username">
                <font>
-                  <Font name="Cooper Black" size="18.0" />
+                  <Font size="14.0" />
+               </font></TextField>
+            <Label alignment="CENTER" layoutX="97.0" layoutY="243.0" prefHeight="42.0" prefWidth="211.0" text="Password" textFill="#fbf3e4">
+               <font>
+                  <Font name="Cooper Black" size="36.0" />
                </font>
             </Label>
-            <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="64.0" layoutY="199.0" prefHeight="26.0" prefWidth="167.0" promptText="Password" />
-            <Button fx:id="signUpButton" layoutX="28.0" layoutY="347.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" style="-fx-background-color: #559CAD; -fx-cursor: hand;">
+            <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="95.0" layoutY="285.0" prefHeight="39.0" prefWidth="211.0" promptText="Password">
+               <font>
+                  <Font size="14.0" />
+               </font></PasswordField>
+            <Button fx:id="signUpButton" layoutX="41.0" layoutY="483.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="150.0" style="-fx-background-color: #559CAD; -fx-cursor: hand;">
                <graphic>
-                  <ImageView fitHeight="26.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="48.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/signUp.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="cancelButton" layoutX="159.0" layoutY="347.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="114.0" style="-fx-background-color: #559CAD; -fx-cursor: hand;">
+            <Button fx:id="cancelButton" layoutX="218.0" layoutY="483.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="150.0" style="-fx-background-color: #559CAD; -fx-cursor: hand;">
                <graphic>
-                  <ImageView fitHeight="26.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="45.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@img/cancel.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Label fx:id="warningLabel" alignment="CENTER" layoutX="42.0" layoutY="310.0" prefWidth="212.0" text="Invalid login. Please try again" textFill="#e14b69">
-               <font>
-                  <Font name="Cooper Black" size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="62.0" layoutY="239.0" text="Confirm password" textFill="#fbf3e4">
+            <Label fx:id="warningLabel" alignment="CENTER" layoutX="30.0" layoutY="447.0" prefHeight="22.0" prefWidth="342.0" text="Invalid login. Please try again" textFill="#e14b69">
                <font>
                   <Font name="Cooper Black" size="18.0" />
                </font>
             </Label>
-            <PasswordField fx:id="confirmPasswordTextField" alignment="CENTER" layoutX="64.0" layoutY="261.0" prefHeight="26.0" prefWidth="167.0" promptText="Password" />
+            <Label alignment="CENTER" layoutX="27.0" layoutY="346.0" text="Confirm password" textFill="#fbf3e4">
+               <font>
+                  <Font name="Cooper Black" size="36.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="confirmPasswordTextField" alignment="CENTER" layoutX="95.0" layoutY="388.0" prefHeight="39.0" prefWidth="211.0" promptText="Password">
+               <font>
+                  <Font size="14.0" />
+               </font></PasswordField>
          </children>
       </AnchorPane>
    </items>
