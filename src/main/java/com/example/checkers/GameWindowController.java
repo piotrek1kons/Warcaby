@@ -25,7 +25,7 @@ public class GameWindowController implements Initializable {
     @FXML
     private Pane boardPane; //panel z planszą - będzie ciężko :(
 
-    private String login;
+    private User user;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -53,13 +53,16 @@ public class GameWindowController implements Initializable {
             String started = "NO";
             boolean cont = true;
             boolean timeStop = false;
-            String board = "";
+            String[] board = null;
             String wybranyPionek = "";
             String mozliweRuchy = "";
             String wybranyRuch = "";
             String czyKolejnyRuch = "";
 
             // wysłanie danych użytkownika na serwer
+            out.write(user.toString());
+            out.newLine();
+            out.flush();
 
             // TODO wątek uruchamiający zegar
             // TODO zegar odlicza do zera
@@ -75,13 +78,15 @@ public class GameWindowController implements Initializable {
 
                     // 1. odebranie tablicy od servera
                     // oddzielone spacjami ; W->biały ; B->czarny ; WQ->biała królowa ; BQ->czarna królowa ; NULL->puste pole
-                    board = in.readLine();
+                    board = in.readLine().split(" ");
                     wybranyPionek = "NULL;NULL";
 
+                    // TODO wyświetlanie tablicy (trzeba będzie wyczyścić poprzednie ustawienia przed żeby się nie nakładało)
+                    aktualizujBoarda(board);
+
             /*
-                    TODO tutaj będzie wyświetlanie pionków tablicy
                     TODO uruchomienie zegara
-                    TODO a potem wybranie pionka tak żeby był zapisany jako String w formacie CH;Y
+                    TODO wybranie pionka tak żeby był zapisany jako String w formacie CH;Y
              */
 
                     // 2. wysłanie wybranego pionka na serwer (CH;Y) (jeżeli czas sie skończył to "END")
@@ -116,8 +121,6 @@ public class GameWindowController implements Initializable {
 
                     /*
                             TODO tutaj będzie wybór kolejnego możliwego ruchu
-                            TODO uruchomienie zegara
-                            TODO a potem wybranie pionka tak żeby był zapisany jako String w formacie CH;Y
                      */
 
 
@@ -136,16 +139,17 @@ public class GameWindowController implements Initializable {
                     }
 
                     // 5. odebranie aktualizacji tablicy z serwera
-                    board = in.readLine();
+                    board = in.readLine().split(" ");
+                    aktualizujBoarda(board);
 
 
                     // 6. if (serwer == NEXT) -> ... else if (serwer == STOP) -> ...
                     // 7. jeśli NEXT: wraca do pkt. 1
                     // 8. w przeciwnym razie czeka na swoją kolej i też wraca do pkt 1
                     czyKolejnyRuch = in.readLine();
-                    if (czyKolejnyRuch.equals("NEXT")){
-                        continue;
-                    } else if (czyKolejnyRuch.equals("STOP")){
+
+                    if (czyKolejnyRuch.equals("STOP")){
+                        // TODO zatrzymanie zegara
                         started = "NO";
                         break;
                     }
@@ -184,9 +188,34 @@ public class GameWindowController implements Initializable {
 
     }
 
+    public void aktualizujBoarda(String[] board){
+        int index = 0;
+        for (Character ch='A'; ch<='H'; ch++){
+            for (int y=1; y<=8; y++){
+                switch (board[index]){
+                    case "W":
+                        // wyświetl białego pionka na pozycji (ch;y)
+                        break;
+                    case "B":
+                        // wyświetl czarnego pionka na pozycji (ch;y)
+                        break;
+                    case "WQ":
+                        // wyświetl białą królową na pozycji (ch;y)
+                        break;
+                    case "BQ":
+                        // wyświetl białą królową na pozycji (ch;y)
+                        break;
+                    case "NULL":
+                        // zostaw (ch;y) puste
+                        break;
+                }
+                index++;
+            }
+        }
+    }
 
     // TODO wstawić to do użytkownika
-    public void setLogin(String login){
-        this.login = login;
+    public void setLogin(User user){
+        this.user = user;
     }
 }

@@ -31,16 +31,19 @@ public class RuchGraczaThread implements Callable<Player> {
 
         // TODO pobranie od klienta loginu i hasła gracza i utworzenie obiektu użytkownika
         String[] daneUzytkownika = in.readLine().split(";");
-        player = new Player(new User(daneUzytkownika[0], Integer.parseInt(daneUzytkownika[1]), Integer.parseInt(daneUzytkownika[2]), Integer.parseInt(daneUzytkownika[3])),isWhite);
+        player  = new Player(new User(daneUzytkownika[0], Integer.parseInt(daneUzytkownika[1]), Integer.parseInt(daneUzytkownika[2]), Integer.parseInt(daneUzytkownika[3])),isWhite);
 
         board.showBoard();
 
         // TODO gra się zakończy gdy gracz otrzyma max punktów lub upłynie czas poświęcony na grę
         // TODO (np 30 minut - maybe jakieś odliczanie po stronie klienta ?? )
-        // TODO Also użytkownik powinien mieć czas na odpowiedź (może też odliczanie po stronie klienta? wtedy można by było
-        // TODO przerwać odpowiedź)
         // TODO Wątek z odliczaniem na kliencie
-        serverCondition.wykonajRuch(in, out);
+
+        boolean isGameOn = true;
+
+        while (isGameOn){
+            isGameOn = serverCondition.wykonajRuch(in, out, player);
+        }
 
         return player;
     }

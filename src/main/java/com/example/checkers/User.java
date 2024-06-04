@@ -20,6 +20,11 @@ public class User {
         this.lost = lost;
     }
 
+    @Override
+    public String toString(){
+        return nick + ";" + wins + ";" + draws + ";" + lost;
+    }
+
 
     // TODO --------- GETTERY I SETTERY ---------
     public void setWins(){

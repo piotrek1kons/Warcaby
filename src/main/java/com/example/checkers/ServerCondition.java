@@ -14,12 +14,13 @@ public class ServerCondition {
     private Board board;
     private boolean isGameOn = true;
 
+
     public ServerCondition(Board board){
         this.board = board;
     }
 
     // TODO
-    public int wykonajRuch(BufferedReader in, BufferedWriter out){
+    public boolean wykonajRuch(BufferedReader in, BufferedWriter out, Player p){
         lock.lock();
         try{
             while(doesSomeonePlay){
@@ -31,8 +32,6 @@ public class ServerCondition {
                 // TODO przerwij grę
             }
 
-
-            // TODO serwer pobiera ruch od klienta i aktualizuje wszystkie pola (Board i punkty użykownika)
 
             // TODO serwer wysyła info o rozpoczęciu ruchu
             out.write("START");  // poinformowanie klienta o rozpoczęciu ruchu
@@ -51,8 +50,8 @@ public class ServerCondition {
             // TODO JEŚLI OTRZYMA KOMUNIKAT END - KONIEC GRY
             if (odpowiedz[0].equals("END")){
                 isGameOn = false;
-                // TODO wyzerowanie pkt użytkownika
-                // TODO zatrzymać wątek
+                p.resetPoints();
+                return false;
             }
 
             Character ch = odpowiedz[0].charAt(0);
@@ -67,11 +66,11 @@ public class ServerCondition {
             wyslanieTablicy(nextMove, out);
 
             // odebranie nowego ruchu od klienta
-            odpowiedz = in.readLine().split(";");  // CH;Y TODO sprawdzenie czy jest NULL
+            odpowiedz = in.readLine().split(";"); // CH;Y
             if (odpowiedz[0].equals("END")){
                 isGameOn = false;
-                // TODO wyzerowanie pkt użytkownika
-                // TODO zatrzymać wątek
+                p.resetPoints();
+                return false;
             }
             ch = odpowiedz[0].charAt(0);
             y = Integer.parseInt(odpowiedz[1]);
@@ -99,6 +98,11 @@ public class ServerCondition {
 
                 // odebranie nowego ruchu od klienta
                 odpowiedz = in.readLine().split(";");  // CH;Y
+                if (odpowiedz[0].equals("END")){
+                    isGameOn = false;
+                    p.resetPoints();
+                    return false;
+                }
                 ch = odpowiedz[0].charAt(0);
                 y = Integer.parseInt(odpowiedz[1]);
 
@@ -124,6 +128,8 @@ public class ServerCondition {
             // TODO flaga zmienia się w momencie jak gracz skończy wykonywać swój ruch
             doesSomeonePlay = false;
             player.signal();
+
+            return true;
 
 
         } catch (Exception e) {
