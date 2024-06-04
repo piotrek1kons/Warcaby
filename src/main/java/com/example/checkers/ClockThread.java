@@ -2,27 +2,28 @@ package com.example.checkers;
 
 import java.util.concurrent.Callable;
 
-public class ClockThread implements Callable<Boolean> {
-    private int minuty = 5;
-    private int sekundy = 0;
+public class ClockThread implements Callable<Clock> {
 
     @Override
-    public Boolean call() throws Exception {
+    public Clock call() throws Exception {
+        Clock clock = new Clock();
 
-        //while (minuty != 0 && sekundy != 0){
-            System.out.println((minuty < 10 ? "0" : "") + minuty + " : " + (sekundy < 10 ? "0" : "") + sekundy);
+        clock.printClock();
+
+        while (clock.isRunning()){
+            int sekundy = clock.getSekundy();
+            int minuty = clock.getMinuty();
 
             if (sekundy == 0 && minuty != 0){
+                clock.setSekundy(59);
                 minuty--;
-                sekundy = 59;
-                return true;
+                clock.setMinuty(minuty);
             } else if (sekundy != 0) {
                 sekundy--;
-                return true;
+                clock.setSekundy(sekundy);
             }
-        //}
+        }
 
-
-        return false;
+        return clock;
     }
 }
