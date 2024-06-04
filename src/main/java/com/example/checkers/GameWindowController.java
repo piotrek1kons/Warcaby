@@ -23,6 +23,10 @@ public class GameWindowController implements Initializable {
     @FXML
     private Label whichPlayerLabel; //nazwa urzytkownika którego teraz jest tura - trzeba będzie zmieniac nazwe przy kazdej kolejce
     @FXML
+    private Label minuteLabel;
+    @FXML
+    private Label secondLabel;
+    @FXML
     private Pane boardPane; //panel z planszą - będzie ciężko :(
 
     private User user;
