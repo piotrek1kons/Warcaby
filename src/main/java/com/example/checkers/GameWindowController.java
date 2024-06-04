@@ -25,7 +25,7 @@ public class GameWindowController implements Initializable {
     @FXML
     private Pane boardPane; //panel z planszą - będzie ciężko :(
 
-    private User user;
+    private User user = new User("test",1,2,3);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
