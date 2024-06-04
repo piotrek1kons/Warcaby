@@ -91,7 +91,7 @@ public class GameWindowController implements Initializable {
 
                     // 2. wysłanie wybranego pionka na serwer (CH;Y) (jeżeli czas sie skończył to "END")
                     if (timeStop){
-                        out.write("END");
+                        out.write("NULL;NULL");
                         out.newLine();
                         out.flush();
 
@@ -107,7 +107,7 @@ public class GameWindowController implements Initializable {
                     // 3. pobranie tablicy możliwych ruchów
                     mozliweRuchy = in.readLine();
 
-                    if (mozliweRuchy.equals("NULL")){
+                    if (mozliweRuchy.contains("NULL")){
                         started = "NO";
                         break;
                     } else {

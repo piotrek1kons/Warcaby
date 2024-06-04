@@ -67,7 +67,7 @@ public class ServerCondition {
 
             // odebranie nowego ruchu od klienta
             odpowiedz = in.readLine().split(";"); // CH;Y
-            if (odpowiedz[0].equals("END")){
+            if (odpowiedz[0].equals("NULL")){
                 isGameOn = false;
                 p.resetPoints();
                 return false;
@@ -98,7 +98,7 @@ public class ServerCondition {
 
                 // odebranie nowego ruchu od klienta
                 odpowiedz = in.readLine().split(";");  // CH;Y
-                if (odpowiedz[0].equals("END")){
+                if (odpowiedz[0].equals("NULL")){
                     isGameOn = false;
                     p.resetPoints();
                     return false;
