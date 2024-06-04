@@ -3,10 +3,13 @@ package com.example.checkers;
 import java.util.concurrent.Callable;
 
 public class ClockThread implements Callable<Clock> {
+    private Clock clock;
+    public ClockThread(Clock clock){
+        this.clock = clock;
+    }
 
     @Override
     public Clock call() throws Exception {
-        Clock clock = new Clock();
 
         clock.printClock();
 
@@ -22,6 +25,7 @@ public class ClockThread implements Callable<Clock> {
                 sekundy--;
                 clock.setSekundy(sekundy);
             }
+            Thread.sleep(1000);
         }
 
         return clock;
