@@ -12,13 +12,14 @@ public class ServerCondition {
     private Condition player = lock.newCondition();
     private boolean doesSomeonePlay = true;
     private Board board;
+    private boolean isGameOn = true;
 
     public ServerCondition(Board board){
         this.board = board;
     }
 
     // TODO
-    public void wykonajRuch(BufferedReader in, BufferedWriter out){
+    public int wykonajRuch(BufferedReader in, BufferedWriter out){
         lock.lock();
         try{
             while(doesSomeonePlay){
@@ -26,9 +27,18 @@ public class ServerCondition {
             }
 
             doesSomeonePlay = true;
+            if (!isGameOn){
+                // TODO przerwij grę
+            }
 
 
             // TODO serwer pobiera ruch od klienta i aktualizuje wszystkie pola (Board i punkty użykownika)
+
+            // TODO serwer wysyła info o rozpoczęciu ruchu
+            out.write("START");  // poinformowanie klienta o rozpoczęciu ruchu
+            out.newLine();
+            out.flush();
+
             // TODO serwer wysyła zaaktualizowane dane do klienta, u każdego klienta plansza rysuje się osobno
             // wysłanie aktualizacji tablicy
             String[] msg = boardToString();
@@ -37,6 +47,14 @@ public class ServerCondition {
             // TODO serwer pobiera ruch od klienta
             // wybranie pionka do ruszenia
             String[] odpowiedz = in.readLine().split(";");  // CH;Y
+
+            // TODO JEŚLI OTRZYMA KOMUNIKAT END - KONIEC GRY
+            if (odpowiedz[0].equals("END")){
+                isGameOn = false;
+                // TODO wyzerowanie pkt użytkownika
+                // TODO zatrzymać wątek
+            }
+
             Character ch = odpowiedz[0].charAt(0);
             int y = Integer.parseInt(odpowiedz[1]);
 
@@ -49,7 +67,12 @@ public class ServerCondition {
             wyslanieTablicy(nextMove, out);
 
             // odebranie nowego ruchu od klienta
-            odpowiedz = in.readLine().split(";");  // CH;Y
+            odpowiedz = in.readLine().split(";");  // CH;Y TODO sprawdzenie czy jest NULL
+            if (odpowiedz[0].equals("END")){
+                isGameOn = false;
+                // TODO wyzerowanie pkt użytkownika
+                // TODO zatrzymać wątek
+            }
             ch = odpowiedz[0].charAt(0);
             y = Integer.parseInt(odpowiedz[1]);
 
@@ -64,8 +87,10 @@ public class ServerCondition {
             f = b.get(ch).get(y);
             nextMove = f.getPawn().nextMove(true, board);
 
+
+
             while (nextMove != null){
-                out.write("NEXT");  // klient ma znowu odebrać kolejny ruch
+                out.write("NEXT");  // poinformowanie klienta o możliwości następnego ruchu
                 out.newLine();
                 out.flush();
 
