@@ -32,19 +32,9 @@
                   <Image url="@img/zegarTlo.png" />
                </image>
             </ImageView>
-            <Text fill="#fbf3e4" layoutX="299.0" layoutY="562.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" textAlignment="CENTER" wrappingWidth="18.513702392578125">
+            <Text fill="#fbf3e4" layoutX="297.0" layoutY="563.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" textAlignment="CENTER" wrappingWidth="23.313690185546875">
                <font>
                   <Font name="Cooper Black" size="48.0" />
-               </font>
-            </Text>
-            <Text fx:id="minuteLabel" fill="#fbf3e4" layoutX="219.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="80.91359686851501">
-               <font>
-                  <Font name="Cooper Black" size="60.0" />
-               </font>
-            </Text>
-            <Text fx:id="secondLabel" fill="#fbf3e4" layoutX="315.0" layoutY="566.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="CENTER" wrappingWidth="81.71371507644653">
-               <font>
-                  <Font name="Cooper Black" size="60.0" />
                </font>
             </Text>
             <ImageView fitHeight="62.0" fitWidth="52.0" layoutX="155.0" layoutY="525.0" pickOnBounds="true" preserveRatio="true">
@@ -67,46 +57,46 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="whichPlayerLabel1" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="1" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel11" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="2" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel111" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="3" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="3" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel1111" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="4" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="4" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel11111" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="5" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="5" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel111111" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="6" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="6" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel1111111" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="7" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="7" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel11111111" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="8" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="8" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
+                  </Text>
                </children>
             </GridPane>
             <GridPane layoutX="39.0" layoutY="110.0" prefHeight="403.0" prefWidth="34.0">
@@ -124,48 +114,58 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="whichPlayerLabel12" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="A" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="A" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel121" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="B" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="B" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel122" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="C" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="C" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel123" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="D" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="D" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel124" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="E" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="E" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel125" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="F" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="F" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel126" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="G" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="G" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="whichPlayerLabel127" alignment="CENTER" contentDisplay="CENTER" prefHeight="12.0" prefWidth="5.0" text="H" textFill="#fbf3e4" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
+                  </Text>
+                  <Text fill="#fbf3e4" strokeType="OUTSIDE" strokeWidth="0.0" text="H" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Cooper Black" size="18.0" />
                      </font>
-                  </Label>
+                  </Text>
                </children>
             </GridPane>
+            <Label fx:id="minuteLabel" layoutX="236.0" layoutY="517.0" text="00" textFill="#fbf3e4">
+               <font>
+                  <Font name="Cooper Black" size="50.0" />
+               </font>
+            </Label>
+            <Label fx:id="secondLabel" layoutX="320.0" layoutY="517.0" text="00" textFill="#fbf3e4">
+               <font>
+                  <Font name="Cooper Black" size="50.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </center>
