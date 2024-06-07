@@ -29,6 +29,7 @@ public class GameWindowController implements Initializable {
     @FXML
     private Pane boardPane; //panel z planszą - będzie ciężko :(
 
+
     private User user = new User("test",1,2,3);
 
     @Override
@@ -44,9 +45,55 @@ public class GameWindowController implements Initializable {
         new Thread(this::komunikacjaZServerem).start();
     }
 
-    public void komunikacjaZServerem(){
-        //tutaj można dodawać
+    /*
+    public void createBoard() {
+        gridPane.setGridLinesVisible(true);
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                Rectangle rect = new Rectangle(80, 80);
+                if ((row + col) % 2 == 0) {
+                    rect.setFill(Color.BEIGE);
+                } else {
+                    rect.setFill(Color.BROWN);
+                }
+                gridPane.add(rect, col, row);
+            }
+        }
+    }
+     */
 
+    /*
+    public void aktualizujBoarda(String[] board) {
+        gridPane.getChildren().clear();
+        createBoard();
+        int index = 0;
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                String piece = board[index++];
+                if (!"NULL".equals(piece)) {
+                    Rectangle rect = new Rectangle(60, 60);
+                    switch (piece) {
+                        case "W":
+                            rect.setFill(Color.WHITE);
+                            break;
+                        case "B":
+                            rect.setFill(Color.BLACK);
+                            break;
+                        case "WQ":
+                            rect.setFill(Color.LIGHTGRAY);
+                            break;
+                        case "BQ":
+                            rect.setFill(Color.DARKGRAY);
+                            break;
+                    }
+                    gridPane.add(rect, col, row);
+                }
+            }
+        }
+
+     */
+
+    public void komunikacjaZServerem(){
         // komunikacja z serwerem
         int port = 6666;
         BufferedReader in = null;
