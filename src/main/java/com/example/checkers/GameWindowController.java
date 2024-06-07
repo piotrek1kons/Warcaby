@@ -41,6 +41,10 @@ public class GameWindowController implements Initializable {
             }
         });
 
+        new Thread(this::komunikacjaZServerem).start();
+    }
+
+    public void komunikacjaZServerem(){
         //tutaj można dodawać
 
         // komunikacja z serwerem
@@ -187,9 +191,6 @@ public class GameWindowController implements Initializable {
                 }
             }
         }
-
-
-
     }
 
     public void aktualizujBoarda(String[] board){
