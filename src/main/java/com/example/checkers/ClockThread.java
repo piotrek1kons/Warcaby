@@ -16,11 +16,13 @@ public class ClockThread implements Callable<Clock> {
         while (clock.isRunning()){
             int sekundy = clock.getSekundy();
             int minuty = clock.getMinuty();
+            clock.updateLabels(minuty, sekundy);
 
             if (sekundy == 0 && minuty != 0){
                 clock.setSekundy(59);
                 minuty--;
                 clock.setMinuty(minuty);
+
             } else if (sekundy != 0) {
                 sekundy--;
                 clock.setSekundy(sekundy);
