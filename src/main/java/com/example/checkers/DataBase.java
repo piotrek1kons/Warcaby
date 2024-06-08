@@ -127,6 +127,10 @@ public class DataBase {
         return null;
     }
 
+    public Statement getSt() {
+        return st;
+    }
+
     public static int executeUpdate(Statement s, String sql){
         try{
             return s.executeUpdate(sql);

@@ -23,7 +23,7 @@ public class SignUpWindowController implements Initializable {
     @FXML
     private TextField usernameTextField;
     @FXML
-    private PasswordField passwordField;
+    private PasswordField passwordTextField;
     @FXML
     private PasswordField confirmPasswordTextField;
 
@@ -35,11 +35,29 @@ public class SignUpWindowController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DataBase db = new DataBase();
+                if(usernameTextField.getText().isEmpty()|| passwordTextField.getText().isEmpty() || confirmPasswordTextField.getText().isEmpty()){
+                    warningLabel.setText("Please fill all fields!");
+                    return;
+                }
                 String login = db.getData("SELECT login FROM user where login like \"" + usernameTextField.getText() + "\";");
-
-
-                //DBUtils.changeScene(event, "MainWindowGUI.fxml", "Main Window!");
-            }
+                String password = passwordTextField.getText();
+                String confirmPassword = confirmPasswordTextField.getText();
+                if (login != null) {
+                    warningLabel.setText("User already exists!");
+                }else if(password.equals(confirmPassword)){
+                    db.executeUpdate(db.getSt(),"INSERT INTO user (login, haslo, ilosc_wygranych, ilosc_przegranych, ilosc_remisow) VALUES (\"" + usernameTextField.getText() + "\", \"" + passwordTextField.getText() + "\", 0, 0, 0);");
+                    warningLabel.setText("User created!");
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    User user = new User(usernameTextField.getText(), 0,0,0);
+                    DBUtils.changeScene(event, "MainWindowGUI.fxml", "Main Window!");
+                }else{
+                    warningLabel.setText("Passwords do not match!");
+                }
+                }
         });
         cancelButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
