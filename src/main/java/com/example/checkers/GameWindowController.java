@@ -78,8 +78,7 @@ public class GameWindowController implements Initializable {
             white = !white;
         }
     }
-
-    /*
+/*
     public void aktualizujBoarda(String[] board) {
         gridPane.getChildren().clear();
         createBoard();
@@ -107,9 +106,8 @@ public class GameWindowController implements Initializable {
                 }
             }
         }
-
-     */
-
+    }
+*/
     public void komunikacjaZServerem(){
         //createBoard();
 
