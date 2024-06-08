@@ -25,56 +25,49 @@ public class LogInWindowController implements Initializable {
     @FXML
     private Label warningLabel;
     @FXML
-    private TextField userNameTextField;
+    private TextField usernameTextField;
     @FXML
-    private PasswordField passwordField;
-
-    private Statement st;
-    private Connection con;
-
+    private PasswordField passwordTextField;
+    private DataBase db = new DataBase();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         logInButton1.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
-//                DataBase db = openDb();
-//                String login = null;
-//                String password = null;
-//                ResultSet rsLogin  = db.executeQuery(st,"SELECT login FROM user where login like \"" + userNameTextField.getText() + "\";");
-//                ResultSet rsPassword  = db.executeQuery(st,"SELECT haslo FROM user where haslo like \"" + passwordField.getText() + "\";");
-//
-//                try {
-//                    if(rsLogin.next()){
-//                        login = rsLogin.getString(1);
-//                    }
-//                } catch (SQLException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                try {
-//                    if(rsPassword.next()){
-//                        password = rsPassword.getString(1);
-//                    }
-//                } catch (SQLException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                if(userNameTextField.getText().equals(login)) {
-//                    if(passwordField.getText().equals(password)){
-//                        warningLabel.setText("Logowanie udane!");
-//                        try {
-//                            Thread.sleep(1000);
-//                        } catch (InterruptedException e) {
-//                            throw new RuntimeException(e);
-//                        }
-//
-                System.out.println(userNameTextField);
+                if(usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty()){
+                    warningLabel.setText("Please fill all fields!");
+                    return;
+                }
+                String login = db.getData("SELECT login FROM user where login like \"" + usernameTextField.getText() + "\";");
+
+                if (login == null) {
+                    warningLabel.setText("User does not exist!");
+                }else{
+                    String password = db.getData("SELECT haslo FROM user where login like \"" + usernameTextField.getText() + "\";");
+                    if(password.equals(passwordTextField.getText())){
+                        warningLabel.setText("Logged in!");
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Integer wins = Integer.parseInt(db.getData("SELECT ilosc_wygranych FROM user where login like \"" + usernameTextField.getText() + "\";"));
+                        Integer losses = Integer.parseInt(db.getData("SELECT ilosc_przegranych FROM user where login like \"" + usernameTextField.getText() + "\";"));
+                        Integer draws = Integer.parseInt(db.getData("SELECT ilosc_remisow FROM user where login like \"" + usernameTextField.getText() + "\";"));
+                        User user = new User(usernameTextField.getText(), wins, losses, draws);
+                        db.closeConnection(db.getCon(), db.getSt());
                         DBUtils.changeScene(event, "MainWindowGUI.fxml", "Main Window!");
-//                    }else {
-//                        warningLabel.setText("Błędne hasło!");
-//                    }
-//                }else{
-//                    warningLabel.setText("Błędny Login lub hasło!");
-//                }
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }else{
+                    warningLabel.setText("Wrong password!");
+                }
+            }
+
+
 
 
             }

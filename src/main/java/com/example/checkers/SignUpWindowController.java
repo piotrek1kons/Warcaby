@@ -53,6 +53,7 @@ public class SignUpWindowController implements Initializable {
                         throw new RuntimeException(e);
                     }
                     User user = new User(usernameTextField.getText(), 0,0,0);
+                    db.closeConnection(db.getCon(), db.getSt());
                     DBUtils.changeScene(event, "MainWindowGUI.fxml", "Main Window!");
                 }else{
                     warningLabel.setText("Passwords do not match!");

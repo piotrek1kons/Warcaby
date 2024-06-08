@@ -107,7 +107,7 @@ public class DataBase {
         return null;
     }
 
-    private static void closeConnection(Connection conn, Statement s){
+    public static void closeConnection(Connection conn, Statement s){
         System.out.println("Zamykanie połączenia z bazą danych:");
         try{
             s.close();
@@ -129,6 +129,10 @@ public class DataBase {
 
     public Statement getSt() {
         return st;
+    }
+
+    public Connection getCon() {
+        return con;
     }
 
     public static int executeUpdate(Statement s, String sql){

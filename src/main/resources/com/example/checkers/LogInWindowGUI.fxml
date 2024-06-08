@@ -69,7 +69,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label fx:id="warningLabel" alignment="CENTER" layoutX="55.0" layoutY="330.0" prefHeight="58.0" prefWidth="286.0" text="Invalid login. Please try again" textFill="#e14b69">
+            <Label fx:id="warningLabel" alignment="CENTER" layoutX="55.0" layoutY="330.0" prefHeight="58.0" prefWidth="286.0" text="" textFill="#e14b69">
                <font>
                   <Font name="Cooper Black" size="18.0" />
                </font>
