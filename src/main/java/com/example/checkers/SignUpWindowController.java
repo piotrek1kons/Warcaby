@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
@@ -18,15 +20,45 @@ public class SignUpWindowController implements Initializable {
     private Button signUpButton;
     @FXML
     private Label warningLabel;
-
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private PasswordField passwordTextField;
+    @FXML
+    private PasswordField confirmPasswordTextField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         signUpButton.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "MainWindowGUI.fxml", "Main Window!");
-            }
+                DataBase db = new DataBase();
+                if(usernameTextField.getText().isEmpty()|| passwordTextField.getText().isEmpty() || confirmPasswordTextField.getText().isEmpty()){
+                    warningLabel.setText("Please fill all fields!");
+                    return;
+                }
+                String login = db.getData("SELECT login FROM user where login like \"" + usernameTextField.getText() + "\";");
+                String password = passwordTextField.getText();
+                String confirmPassword = confirmPasswordTextField.getText();
+                if (login != null) {
+                    warningLabel.setText("User already exists!");
+                }else if(password.equals(confirmPassword)){
+                    db.executeUpdate(db.getSt(),"INSERT INTO user (login, haslo, ilosc_wygranych, ilosc_przegranych, ilosc_remisow) VALUES (\"" + usernameTextField.getText() + "\", \"" + passwordTextField.getText() + "\", 0, 0, 0);");
+                    warningLabel.setText("User created!");
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    User user = new User(usernameTextField.getText(), 0,0,0);
+                    db.closeConnection(db.getCon(), db.getSt());
+                    DBUtils.changeScene(event, "MainWindowGUI.fxml", "Main Window!");
+                }else{
+                    warningLabel.setText("Passwords do not match!");
+                }
+                }
         });
         cancelButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override

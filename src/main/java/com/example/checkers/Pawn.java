@@ -38,7 +38,6 @@ public class Pawn {
         if (field.getPawn() != null){
             return false;
         }
-
         return true;
     }
 
@@ -159,7 +158,7 @@ public class Pawn {
 
     // TODO --------- GETTERY I SETTERY ---------
     public boolean isWhite() {
-        return isWhite;
+        return this.isWhite;
     }
     public Character getCh() {
         return ch;
@@ -173,4 +172,10 @@ public class Pawn {
     public boolean getIsQueen(){
         return isQueen;
     }
+    public int getWidth() {return width;}
+
+    public Character getHeight() {return height;}
+    public void setDead(boolean dead) {isDead = dead;}
+    public void setCh(Character ch) {this.ch = ch;}
+    public void setY(Integer y) {this.y = y;}
 }
