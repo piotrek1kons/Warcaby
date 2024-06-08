@@ -38,7 +38,7 @@
                   <Font name="Cooper Black" size="36.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="95.0" layoutY="181.0" prefHeight="39.0" prefWidth="227.0" promptText="Username">
+            <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="95.0" layoutY="181.0" prefHeight="39.0" prefWidth="211.0" promptText="Username">
                <font>
                   <Font size="14.0" />
                </font></TextField>
