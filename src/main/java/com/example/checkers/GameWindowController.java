@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
 
 import java.io.*;
 import java.net.Socket;
@@ -28,6 +29,9 @@ public class GameWindowController implements Initializable {
     private Label secondLabel;
     @FXML
     private Pane boardPane; //panel z planszą - będzie ciężko :(
+    @FXML
+    private RowConstraints A,B,C,D,E,F,G,H;
+
 
 
     private User user = new User("test",1,2,3);
