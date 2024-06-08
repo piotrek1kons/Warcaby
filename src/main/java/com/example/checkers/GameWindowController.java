@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.io.*;
 import java.net.Socket;
@@ -52,22 +54,25 @@ public class GameWindowController implements Initializable {
         new Thread(this::komunikacjaZServerem).start();
     }
 
-    /*
     public void createBoard() {
-        gridPane.setGridLinesVisible(true);
+        boolean white = true;
+        //boardGridPane.setGridLinesVisible(true);
+
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
-                Rectangle rect = new Rectangle(80, 80);
-                if ((row + col) % 2 == 0) {
-                    rect.setFill(Color.BEIGE);
+                Rectangle rect = new Rectangle(50, 50, 50, 50);
+                if (white) {
+                    rect.setFill(Color.rgb(251,243,228));
                 } else {
-                    rect.setFill(Color.BROWN);
+                    rect.setFill(Color.rgb(145,18,43));
                 }
-                gridPane.add(rect, col, row);
+
+                white = !white;
+                boardGridPane.add(rect, col, row);
             }
+            white = !white;
         }
     }
-     */
 
     /*
     public void aktualizujBoarda(String[] board) {
@@ -101,6 +106,8 @@ public class GameWindowController implements Initializable {
      */
 
     public void komunikacjaZServerem(){
+        createBoard();
+
         // komunikacja z serwerem
         int port = 6666;
         BufferedReader in = null;
