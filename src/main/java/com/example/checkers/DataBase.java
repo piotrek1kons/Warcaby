@@ -57,11 +57,23 @@ public class DataBase {
         }
     }
 
-    String getData(String query){
+    String getDataString(String query){
          ResultSet rs = this.executeQuery(st, query);
         try {
             if(rs.next()){
                 return rs.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    Integer getDataInt(String query){
+        ResultSet rs = this.executeQuery(st, query);
+        try {
+            if(rs.next()){
+                return rs.getInt(1);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

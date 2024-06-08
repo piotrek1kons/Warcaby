@@ -18,12 +18,20 @@ public class MainWindowController implements Initializable {
     @FXML
     private Button logoutButton;
     @FXML
-    private Label userNameLabel;   //nazwa użytkownika musi być zmieniona
+    private Label usernameLabel;   //nazwa użytkownika musi być zmieniona
     @FXML
     private Label winsScoreLabel;   //liczba wygranych
     @FXML
     private Label defeatsScoreLabel;   //liczba przegranych
 
+    private User user;
+
+    public void setUser(User user) {
+        this.user = user;
+        usernameLabel.setText(user.getUsername());
+        winsScoreLabel.setText(String.valueOf(user.getWins()));
+        defeatsScoreLabel.setText(String.valueOf(user.getLost()));
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
        startGameButton.setOnAction(new EventHandler<ActionEvent>(){     //obsługa przycisku rozpoczecia gry
