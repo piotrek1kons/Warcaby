@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 
@@ -31,6 +32,8 @@ public class GameWindowController implements Initializable {
     private Pane boardPane; //panel z planszą - będzie ciężko :(
     @FXML
     private RowConstraints A,B,C,D,E,F,G,H;
+    @FXML
+    private GridPane boardGridPane;
 
 
 
