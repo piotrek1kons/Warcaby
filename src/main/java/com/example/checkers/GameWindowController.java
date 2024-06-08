@@ -50,6 +50,8 @@ public class GameWindowController implements Initializable {
         });
 
         new Thread(this::komunikacjaZServerem).start();
+
+        minuteLabel.setLabelFor();
     }
 
     /*

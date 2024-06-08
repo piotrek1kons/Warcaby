@@ -18,7 +18,7 @@
          <children>
             <AnchorPane fx:id="boardPane" layoutX="72.0" layoutY="111.0" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: FBF3E4;">
                <children>
-                  <GridPane fx:id="boardGridPane" prefHeight="402.0" prefWidth="402.0">
+                  <GridPane fx:id="boardGridPane" prefHeight="400.0" prefWidth="400.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
