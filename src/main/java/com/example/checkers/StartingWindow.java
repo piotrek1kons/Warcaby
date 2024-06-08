@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Statement;
 
 public class StartingWindow extends Application {
     @Override
@@ -22,7 +24,6 @@ public class StartingWindow extends Application {
         //Board b = new Board();
         //b.setBoard();
         //b.showBoard();
-
 
         launch();
     }
