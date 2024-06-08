@@ -1,5 +1,6 @@
 package com.example.checkers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -51,7 +52,11 @@ public class GameWindowController implements Initializable {
             }
         });
 
-        new Thread(this::komunikacjaZServerem).start();
+        Platform.runLater(() -> createBoard());
+
+        //new Thread(this::komunikacjaZServerem).start();
+
+        //minuteLabel.setLabelFor();
     }
 
     public void createBoard() {
@@ -106,7 +111,7 @@ public class GameWindowController implements Initializable {
      */
 
     public void komunikacjaZServerem(){
-        createBoard();
+        //createBoard();
 
         // komunikacja z serwerem
         int port = 6666;
