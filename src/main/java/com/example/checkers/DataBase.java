@@ -8,8 +8,8 @@ public class DataBase {
     String url = "jdbc:mysql://localhost:3306/";
     private final static String DBUSER = "root";
     private final static String DBPASS = "";
-    private Connection connection;
-    private Statement statement;
+    private Connection con;
+    private Statement st;
     private String query;
     public static boolean checkDriver(String driver){
         System.out.print("Sprawdzanie sterownika:");
@@ -23,7 +23,51 @@ public class DataBase {
         }
     }
 
+    public DataBase(){
+        if(this.checkDriver("com.mysql.cj.jdbc.Driver")){
+            System.out.println("Sterownik OK");
+        }else{
+            System.out.println("Brak sterownika");
+        }
 
+        con = this.getConnection("jdbc:mysql://", "localhost", 3306, "root", "");
+        st = this.createStatement(con);
+        String dbName = "warcaby";
+
+        if(this.executeUpdate(st,"USE " + dbName + ";") == 0) {
+            System.out.println("Użyto bazy " + dbName);
+        }else{
+            System.out.println("Baza nie istenieje! Tworzymy bazę: ");
+            if(this.executeUpdate(st,"CREATE DATABASE " + dbName + ";") == 1) {
+                System.out.println("Baza utworzona");
+            }else{
+                System.out.println("Błąd tworzenia bazy");
+            }
+            if(this.executeUpdate(st,"USE " + dbName + ";") == 0) {
+                System.out.println("Użyto bazy " + dbName);
+                if(this.executeUpdate(st,"CREATE TABLE game (id_rozgrywki int not null, login1 varchar(50) not null, login2 varchar(50) not null, wygrany varchar(50) not null);") == 0) {
+                    System.out.println("Utworzono tabelę game");
+                }
+                if(this.executeUpdate(st,"CREATE TABLE user (login varchar(50) not null, haslo varchar(50) not null, ilosc_wygranych int, ilosc_przegranych int, ilosc_remisow int);") == 0) {
+                    System.out.println("Utworzono tabelę user");
+                }
+            }else{
+                System.out.println("Błąd używania bazy");
+            }
+        }
+    }
+
+    String getData(String query){
+         ResultSet rs = this.executeQuery(st, query);
+        try {
+            if(rs.next()){
+                return rs.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
     public static Connection connectToDatabase(String kindOfDatabase, String adress, String dataBaseName, String userName, String password){
         System.out.println("Łączenie z bazą danych:");
         String baza = kindOfDatabase + adress + "/" + dataBaseName;
