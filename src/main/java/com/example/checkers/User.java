@@ -1,20 +1,20 @@
 package com.example.checkers;
 
 public class User {
-    private String nick;
+    private String username;
     private int wins;
     private int draws;
     private int lost;
 
-    public User(String nick){
-        this.nick = nick;
+    public User(String username){
+        this.username = username;
         this.wins = 0;
         this.draws = 0;
         this.lost = 0;
     }
 
-    public User(String nick, int wins, int draws, int lost){
-        this.nick = nick;
+    public User(String username, int wins, int draws, int lost){
+        this.username = username;
         this.wins = wins;
         this.draws = draws;
         this.lost = lost;
@@ -22,7 +22,7 @@ public class User {
 
     @Override
     public String toString(){
-        return nick + ";" + wins + ";" + draws + ";" + lost;
+        return username + ";" + wins + ";" + draws + ";" + lost;
     }
 
 
@@ -37,5 +37,19 @@ public class User {
         this.lost++;
     }
 
+    public String getUsername() {
+        return username;
+    }
 
+    public int getWins() {
+        return wins;
+    }
+
+    public int getDraws() {
+        return draws;
+    }
+
+    public int getLost() {
+        return lost;
+    }
 }

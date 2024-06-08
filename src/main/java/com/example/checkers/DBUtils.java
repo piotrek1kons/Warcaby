@@ -23,6 +23,20 @@ public class DBUtils {
         stage.show();
     }
 
+    public static void changeSceneUser(ActionEvent event, String fxmlFile, String title, User user) {
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            Parent root = loader.load();
 
+            MainWindowController mainWindowController = loader.getController();
+            mainWindowController.setUser(user);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     //public static void signUpUser(ActionEvent event, String username, String password, String )
 }

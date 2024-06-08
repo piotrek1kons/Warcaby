@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
 import java.net.URL;
@@ -39,7 +38,7 @@ public class SignUpWindowController implements Initializable {
                     warningLabel.setText("Please fill all fields!");
                     return;
                 }
-                String login = db.getData("SELECT login FROM user where login like \"" + usernameTextField.getText() + "\";");
+                String login = db.getDataString("SELECT login FROM user where login like \"" + usernameTextField.getText() + "\";");
                 String password = passwordTextField.getText();
                 String confirmPassword = confirmPasswordTextField.getText();
                 if (login != null) {
@@ -54,7 +53,8 @@ public class SignUpWindowController implements Initializable {
                     }
                     User user = new User(usernameTextField.getText(), 0,0,0);
                     db.closeConnection(db.getCon(), db.getSt());
-                    DBUtils.changeScene(event, "MainWindowGUI.fxml", "Main Window!");
+                    //xzczx
+                    DBUtils.changeSceneUser(event, "MainWindowGUI.fxml", "Main Window!", user);
                 }else{
                     warningLabel.setText("Passwords do not match!");
                 }
