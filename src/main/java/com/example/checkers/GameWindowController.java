@@ -14,6 +14,8 @@ import java.io.*;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.FutureTask;
+
 //klasa obsuguje okno z grą
 public class GameWindowController implements Initializable {
     @FXML
@@ -50,8 +52,11 @@ public class GameWindowController implements Initializable {
         });
 
         new Thread(this::komunikacjaZServerem).start();
+        Clock clock = new Clock(minuteLabel, secondLabel);
+        ClockThread ct = new ClockThread(clock);
+        FutureTask ft = new FutureTask<>(ct);
+        new Thread(ft).start();
 
-        minuteLabel.setLabelFor();
     }
 
     /*
