@@ -37,15 +37,18 @@ public class ServerCondition {
             out.write("START");  // poinformowanie klienta o rozpoczęciu ruchu
             out.newLine();
             out.flush();
+            System.out.println("Wysłano START");
 
             // TODO serwer wysyła zaaktualizowane dane do klienta, u każdego klienta plansza rysuje się osobno
             // wysłanie aktualizacji tablicy
             String[] msg = boardToString();
             wyslanieTablicy(msg, out);
+            System.out.println("Wysłano aktualizację tablicy");
 
             // TODO serwer pobiera ruch od klienta
             // wybranie pionka do ruszenia
             String[] odpowiedz = in.readLine().split(";");  // CH;Y
+            System.out.println("Odebrano wybór pionka");
 
             // TODO JEŚLI OTRZYMA KOMUNIKAT END - KONIEC GRY
             if (odpowiedz[0].equals("END")){

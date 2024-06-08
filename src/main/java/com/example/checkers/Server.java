@@ -45,6 +45,8 @@ public class Server {
                     // TODO jeżeli coś by nie działało to sprawdzić czy nie zwraca 2 razy tego samego wątku
 
                     Game game = new Game(waitingPlayers.poll(),waitingPlayers.poll());
+                    System.out.println("Rozpoczęto grę");
+
                     exec.submit(new FutureTask<>(game){
                         protected void done(){
                             try{

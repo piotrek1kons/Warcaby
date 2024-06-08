@@ -7,10 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 import java.io.*;
@@ -39,7 +42,26 @@ public class GameWindowController implements Initializable {
     private RowConstraints A,B,C,D,E,F,G,H;
     @FXML
     private GridPane boardGridPane;
+    @FXML
+    private GridPane pawnsGridPane;
 
+
+    // --------
+    private int chosenPawnX = -1;
+    private int chosenPawnY = -1;
+
+    private Rectangle thisField = null;
+    private int chosenFieldX = -1;
+    private int chosenFieldY = -1;
+
+    private double lastX;
+    private double lastY;
+
+    private int squareSize = 50;
+    private int circleRadius = 18;
+
+
+    private Color fieldColor = Color.rgb(145, 18, 43);
 
 
     private User user = new User("test",1,2,3);
@@ -61,61 +83,250 @@ public class GameWindowController implements Initializable {
         new Thread(ft).start();
 
         Platform.runLater(() -> createBoard());
+        Platform.runLater(() -> ustawienieStartowe());
 
-        //new Thread(this::komunikacjaZServerem).start();
+        new Thread(this::komunikacjaZServerem).start();
 
         //minuteLabel.setLabelFor();
     }
 
+    public String positionToString(int x, int y){
+        x++;
+        String msg = "";
+        switch(y){
+            case 0:
+                msg += "A;";
+                break;
+            case 1:
+                msg += "B;";
+                break;
+            case 2:
+                msg += "C;";
+                break;
+            case 3:
+                msg += "D;";
+                break;
+            case 4:
+                msg += "E;";
+                break;
+            case 5:
+                msg += "F;";
+                break;
+            case 6:
+                msg += "G;";
+                break;
+            case 7:
+                msg += "H;";
+                break;
+        }
+
+        msg += "" + x;
+
+        return msg;
+    }
+
     public void createBoard() {
-        boolean white = true;
-        //boardGridPane.setGridLinesVisible(true);
+            boolean white = true;
+            //boardGridPane.setGridLinesVisible(true);
 
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                Rectangle rect = new Rectangle(50, 50, 50, 50);
-                if (white) {
-                    rect.setFill(Color.rgb(251,243,228));
-                } else {
-                    rect.setFill(Color.rgb(145,18,43));
-                }
+            for (int row = 0; row < 8; row++) {
+                for (int col = 0; col < 8; col++) {
+                    Rectangle rect = new Rectangle(squareSize, squareSize, squareSize, squareSize);
 
-                white = !white;
-                boardGridPane.add(rect, col, row);
-            }
-            white = !white;
-        }
-    }
-/*
-    public void aktualizujBoarda(String[] board) {
-        gridPane.getChildren().clear();
-        createBoard();
-        int index = 0;
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                String piece = board[index++];
-                if (!"NULL".equals(piece)) {
-                    Rectangle rect = new Rectangle(60, 60);
-                    switch (piece) {
-                        case "W":
-                            rect.setFill(Color.WHITE);
-                            break;
-                        case "B":
-                            rect.setFill(Color.BLACK);
-                            break;
-                        case "WQ":
-                            rect.setFill(Color.LIGHTGRAY);
-                            break;
-                        case "BQ":
-                            rect.setFill(Color.DARKGRAY);
-                            break;
+                    if (white) {
+                        rect.setFill(Color.rgb(251, 243, 228));
+                    } else {
+                        rect.setFill(fieldColor);
+
                     }
-                    gridPane.add(rect, col, row);
+
+                    white = !white;
+
+                    rect.setId(positionToString(col,row));
+                    boardGridPane.add(rect, col, row);
                 }
+                white = !white;
             }
+    }
+
+    class Piece{
+        private double x;
+        private double y;
+        private double r = circleRadius;
+        private Circle c;
+
+        public Piece(double x, double y, Circle c){
+            this.x = x;
+            this.y = y;
+            this.c = c;
+        }
+
+        public double getX() {
+            return x;
+        }
+        public double getY() {
+            return y;
+        }
+
+        public void setX(double x) {
+            this.x = x;
+        }
+        public void setY(double y) {
+            this.y = y;
+        }
+
+        public void draw(){
+            c.setRadius(r);
+            c.setTranslateX(x);
+            c.setTranslateY(y);
         }
     }
-*/
+
+    public Rectangle getRectangleAt(int x, int y) {
+        String rectId = "#" + positionToString(x, y);
+        return (Rectangle) boardGridPane.lookup(rectId);
+    }
+
+    public Color getRectangleColor(int x, int y) {
+        int xx = (x / squareSize);
+        if (lastX < x){
+            xx++;
+        } else {
+            xx--;
+        }
+        int yy = (y / squareSize);
+        if (yy < 0){
+            yy *= (-1);
+        }
+
+        Rectangle rect = getRectangleAt(xx, yy);
+        if (rect != null) {
+            return (Color) rect.getFill();
+        }
+        return null; // or throw an exception if you prefer
+    }
+
+    // MOUSE EVENTS - przesuwanie pionka
+    public void pressed(MouseEvent event, int x, int y){
+        chosenPawnX = x;
+        chosenPawnY = y;
+        thisField = getRectangleAt(x,y);
+    }
+
+    public void dragged(MouseEvent event, Piece p){
+        lastX = p.getX();
+        lastY = p.getY();
+
+        p.setX(lastX + event.getX());
+        p.setY(lastY + event.getY());
+        p.draw();
+    }
+
+    public void released(MouseEvent event, Piece p){
+
+        int gridx = (int)p.getX() / squareSize;
+        int gridy = (int)p.getY() / squareSize;
+
+        p.setX(squareSize * gridx);
+        p.setY(squareSize * gridy);
+
+        Color temp = getRectangleColor((int)p.getX(),(int)p.getY());
+
+        if(temp!=null && temp.equals(fieldColor)){
+            chosenFieldX = (int)p.getX();
+            chosenFieldY = (int)p.getY();
+        } else {
+            p.setX(chosenPawnX);
+            p.setY(chosenPawnX);
+
+            chosenFieldX = chosenPawnY;
+            chosenFieldY = chosenPawnY;
+        }
+
+
+        chosenPawnX = -1;
+        chosenPawnY = -1;
+
+        p.draw();
+    }
+
+    public StackPane kolo(Color color, boolean isQueen, int x, int y){
+        Circle circle = new Circle(circleRadius);
+        StackPane stackPane = new StackPane();
+        Label queenLabel = new Label("Q");
+
+        circle.setFill(color);
+        Piece p = new Piece(x,y,circle);
+
+        circle.setOnMousePressed(event -> pressed(event, x,y));
+        circle.setOnMouseDragged(event -> dragged(event, p));
+        circle.setOnMouseReleased(event -> released(event, p));
+
+
+        stackPane.getChildren().add(circle);
+
+        if (isQueen){
+            stackPane.getChildren().add(queenLabel);
+        }
+
+        return stackPane;
+    }
+
+    public void aktualizujBoarda(String[] board) {
+        Platform.runLater(() -> {
+            pawnsGridPane.getChildren().clear();
+
+            int index = 0;
+            for (int row = 0; row < 8; row++) {
+                for (int col = 0; col < 8; col++) {
+                    String piece = board[index++];
+                    if (!"NULL".equals(piece)) {
+
+                        switch (piece) {
+                            case "W":
+                                pawnsGridPane.add(kolo(Color.WHITE, false, col, row), col, row);
+                                break;
+                            case "B":
+                                pawnsGridPane.add(kolo(Color.BLACK, false, col, row), col, row);
+                                break;
+                            case "WQ":
+                                pawnsGridPane.add(kolo(Color.LIGHTGRAY, true, col, row), col, row);
+                                break;
+                            case "BQ":
+                                pawnsGridPane.add(kolo(Color.DARKGRAY, true, col, row), col, row);
+                                break;
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    public void ustawienieStartowe(){
+        boolean pawn = false;
+
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 8; col++) {
+                if (pawn){
+                    pawnsGridPane.add(kolo(Color.BLACK, false, col, row), col, row);
+                }
+                pawn = !pawn;
+            }
+            pawn = !pawn;
+        }
+
+
+        for (int row = 5; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                if (pawn){
+                    pawnsGridPane.add(kolo(Color.WHITE, false, col, row), col, row);
+                }
+                pawn = !pawn;
+            }
+            pawn = !pawn;
+        }
+    }
+
     public void komunikacjaZServerem(){
         //createBoard();
 
@@ -154,15 +365,20 @@ public class GameWindowController implements Initializable {
             while (cont){
                 // oczekiwanie na swoją kolej
                 started = in.readLine();
-                while (started.equals("START")){
+                System.out.println("Odebrano START");
 
+                while (started.equals("START")){
                     // 1. odebranie tablicy od servera
                     // oddzielone spacjami ; W->biały ; B->czarny ; WQ->biała królowa ; BQ->czarna królowa ; NULL->puste pole
                     board = in.readLine().split(" ");
                     wybranyPionek = "NULL;NULL";
+                    System.out.println("Odebrano aktualizację tablicy");
 
                     // TODO wyświetlanie tablicy (trzeba będzie wyczyścić poprzednie ustawienia przed żeby się nie nakładało)
-                    aktualizujBoarda(board);
+                    if (board != null){
+                        aktualizujBoarda(board);
+                    }
+
 
             /*
                     TODO uruchomienie zegara
@@ -261,32 +477,6 @@ public class GameWindowController implements Initializable {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }
-        }
-    }
-
-    public void aktualizujBoarda(String[] board){
-        int index = 0;
-        for (Character ch='A'; ch<='H'; ch++){
-            for (int y=1; y<=8; y++){
-                switch (board[index]){
-                    case "W":
-                        // wyświetl białego pionka na pozycji (ch;y)
-                        break;
-                    case "B":
-                        // wyświetl czarnego pionka na pozycji (ch;y)
-                        break;
-                    case "WQ":
-                        // wyświetl białą królową na pozycji (ch;y)
-                        break;
-                    case "BQ":
-                        // wyświetl białą królową na pozycji (ch;y)
-                        break;
-                    case "NULL":
-                        // zostaw (ch;y) puste
-                        break;
-                }
-                index++;
             }
         }
     }
