@@ -39,6 +39,8 @@ public class GameWindowController implements Initializable {
     private RowConstraints A,B,C,D,E,F,G,H;
     @FXML
     private GridPane boardGridPane;
+    @FXML
+    private GridPane pawnsGridPane;
 
 
 
