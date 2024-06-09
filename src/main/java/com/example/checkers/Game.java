@@ -36,7 +36,7 @@ public class Game implements Callable<Boolean>  {
                     }
                 }
             });
-
+            Thread.sleep(100);
             exec.submit(new FutureTask<>(player2){
                 protected void done(){
                     try{
@@ -71,10 +71,4 @@ public class Game implements Callable<Boolean>  {
 
         return true;
     }
-
-
-    // TODO --------- GETTERY I SETTERY ---------
-
-
-
 }

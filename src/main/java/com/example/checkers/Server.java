@@ -23,7 +23,6 @@ public class Server {
         serverSocket = new ServerSocket(port);
 
         // Wątki
-        //ServerCondition sc = new ServerCondition();
         RuchGraczaThread rg = null;
         ExecutorService exec = Executors.newFixedThreadPool(250);
 
@@ -42,15 +41,13 @@ public class Server {
                 waitingPlayers.add(rg);
 
                 if (waitingPlayers.size() == 2){
-                    // TODO jeżeli coś by nie działało to sprawdzić czy nie zwraca 2 razy tego samego wątku
-
                     Game game = new Game(waitingPlayers.poll(),waitingPlayers.poll());
                     System.out.println("Rozpoczęto grę");
+                    System.out.println();
 
                     exec.submit(new FutureTask<>(game){
                         protected void done(){
                             try{
-                                // TODO może np. tu zwrócić wynik i wg niego dokonać zwiększenia się wygranych/przegranych usera
                                 boolean result = get();
                                 if (!result){
                                     System.out.println("SOMETHING WENT WRONG");

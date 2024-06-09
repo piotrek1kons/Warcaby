@@ -28,10 +28,12 @@ public class ServerCondition {
             }
 
             doesSomeonePlay = true;
-            if (!isGameOn){
-                // TODO przerwij grę
-            }
 
+
+
+            if (!isGameOn){
+                return false;
+            }
 
             // TODO serwer wysyła info o rozpoczęciu ruchu
             out.write("START");  // poinformowanie klienta o rozpoczęciu ruchu
@@ -89,8 +91,6 @@ public class ServerCondition {
             f = b.get(ch).get(y);
             nextMove = f.getPawn().nextMove(true, board);
 
-
-
             while (nextMove != null){
                 out.write("NEXT");  // poinformowanie klienta o możliwości następnego ruchu
                 out.newLine();
@@ -121,7 +121,6 @@ public class ServerCondition {
                 nextMove = f.getPawn().nextMove(true, board);
 
             }
-
 
             // jeśli nie ma ruchu -> idzie dalej
             out.write("STOP");  // koniec ruchu użytkownika

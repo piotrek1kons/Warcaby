@@ -85,14 +85,9 @@ public class Pawn {
             //sprawdza czy pole jest wolne
             if (isFieldFree(board.getField(chp, yp))) {
                 return chp + ";" + yp;
-                //podswietlenia pola
-                //sprawdza kolor pionka na nastepnym polu
             } else {
                 return checkKill(chp,yp,increment,board);
             }
-        }else{
-            //koniec ruchu
-
         }
         return null;
     }
