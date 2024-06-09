@@ -76,7 +76,7 @@ public class ServerCondition {
             y = Integer.parseInt(odpowiedz[1]);
 
             // wykonanie ruchu
-            f.getPawn().move(ch,y);
+            f.getPawn().move(ch,y,board);
 
             // wysłanie aktualizacji tablicy
             msg = boardToString();
@@ -107,7 +107,7 @@ public class ServerCondition {
                 y = Integer.parseInt(odpowiedz[1]);
 
                 // wykonanie ruchu
-                f.getPawn().move(ch,y);
+                f.getPawn().move(ch,y, board);
 
                 // wysłanie aktualizacji tablicy
                 msg = boardToString();

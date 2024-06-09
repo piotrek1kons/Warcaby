@@ -28,9 +28,19 @@ public class Pawn {
     // TODO ta funkcja poza ruchem powinna też wykonywać bicie pionków (jeżeli taka sytuacja zaistniała)
     // TODO możemy określić ile pkt gracz dostanie za zbicie pionka (maybe 10??) i na podstawie liczby punktów określimy
     // TODO kto wygrał w danej rundzie (max punktów -> gra się zakończy)
-    public void move(Character ch, int y){
+    public void move(Character ch, int y, Board board){
+        if (Math.abs(this.ch - ch) == 2 && Math.abs(this.y - y) == 2) {
+            Character middleCh = (char) ((this.ch + ch) / 2);
+            int middleY = (this.y + y) / 2;
+            if (board.getField(middleCh, middleY).getPawn() != null && board.getField(middleCh, middleY).getPawn().isWhite() != this.isWhite()) {
+                // Wykonaj bicie
+                board.getField(middleCh, middleY).getPawn().kill();
+                //jakos punkty dodac, ale jeszcze nie wiem jak
+            }
+        }
         this.ch = ch;
         this.y = y;
+
     }
 
     // sprawdza czy pole jest wolne

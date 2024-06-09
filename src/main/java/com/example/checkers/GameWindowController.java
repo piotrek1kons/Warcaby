@@ -42,7 +42,15 @@ public class GameWindowController implements Initializable {
     @FXML
     private GridPane pawnsGridPane;
 
+    private User user1;
+    private User user2;
 
+    public void setUser(User user1,User user2) {
+        this.user1 = user1;
+        this.user2 = user2;
+        username1Label.setText(user1.getUsername());
+        username2Label.setText(user2.getUsername());
+    }
 
     private User user = new User("test",1,2,3);
 

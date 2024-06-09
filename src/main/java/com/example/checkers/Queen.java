@@ -94,48 +94,19 @@ public class Queen extends Pawn {
         String temp;
         int yp = getY();
 
-        if(firstKill) {
-            temp = checkMove(chp--,yp--,-1,board);
-            if(temp != null){
-                moves.add(temp);
-            }
-
-            temp = checkMove(chp--,yp++,1,board);
-            if(temp != null){
-                moves.add(temp);
-            }
-
-            temp = checkMove(chp++,yp++,1,board);
-            if(temp != null){
-                moves.add(temp);
-            }
-
-            temp = checkMove(chp++,yp--,1,board);
-            if(temp != null){
-                moves.add(temp);
-            }
-
-        }else{
-            if(isWhite()){
-                temp = checkMove(chp--,yp--,-1,board);
-                if(temp != null){
+        // sprawdza wszystkie możliwe kierunki
+        for (int direction = -1; direction <= 1; direction += 2) {
+            for (int i = 1; i <= super.getWidth(); i++) {
+                temp = checkMove((char)(chp + i * direction), yp + i * direction, direction, board);
+                if (temp != null) {
                     moves.add(temp);
-                }
-                temp = checkMove(chp--,yp++,1,board);
-                if(temp != null){
-                    moves.add(temp);
-                }
-            }else {
-                temp = checkMove(chp++,yp--,-1,board);
-                if(temp != null){
-                    moves.add(temp);
-                }
-                temp = checkMove(chp++,yp++,1,board);
-                if(temp != null){
-                    moves.add(temp);
+                    // podświetla pole
+                } else {
+                    break;  // jeśli ruch nie jest możliwy, przerywa sprawdzanie w tym kierunku
                 }
             }
         }
+
 
         String [] movesArray = new String[moves.size()];
         for(int i = 0; i < moves.size(); i++){
