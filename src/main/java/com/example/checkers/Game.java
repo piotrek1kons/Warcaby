@@ -20,11 +20,14 @@ public class Game implements Callable<Boolean>  {
         player2.setIsWhite(false);
     }
     public Boolean call(){
+        System.out.println("start call");
         ExecutorService exec = Executors.newFixedThreadPool(2);
 
         final Player[] playersResult = new Player[2];
+        System.out.println("create play");
 
         try {
+            System.out.println("starting wątek");
             exec.submit(new FutureTask<>(player1){
                 protected void done(){
                     try{
@@ -36,7 +39,10 @@ public class Game implements Callable<Boolean>  {
                     }
                 }
             });
+
             Thread.sleep(100);
+
+            System.out.println("starting drugi wątek");
             exec.submit(new FutureTask<>(player2){
                 protected void done(){
                     try{

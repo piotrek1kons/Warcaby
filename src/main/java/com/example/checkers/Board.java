@@ -54,18 +54,34 @@ public class Board {
     // TODO --------- PLANSZA ---------
     // ustawienie pionków na planszy
     public void setBoard(){
+        boolean pawn = false;
+        boolean white = false;
 
-        for(Character i = 'A'; i < height; i++){
+        for(Character i = 'A'; i <= 'C'; i++){
             HashMap<Integer,Field> temp = board.get(i);
+
             for(int j = 0; j < width; j++){
-                if(i < 3 && (i+j)%2 == 1){
-                    temp.get(j+1).setPawn(new Pawn(true,i,i+1));
-                    temp.put(j+1, temp.get(j+1));
-                }else if(i > 4 && (i+j)%2 == 1){
+                if(pawn){
                     temp.get(j+1).setPawn(new Pawn(false,i,i+1));
                     temp.put(j+1, temp.get(j+1));
                 }
+                pawn = !pawn;
             }
+            pawn = !pawn;
+            board.put(i,temp);
+        }
+
+        for(Character i = 'F'; i <= 'H'; i++){
+            HashMap<Integer,Field> temp = board.get(i);
+
+            for(int j = 0; j < width; j++){
+                if(pawn){
+                    temp.get(j+1).setPawn(new Pawn(true,i,i+1));
+                    temp.put(j+1, temp.get(j+1));
+                }
+                pawn = !pawn;
+            }
+            pawn = !pawn;
             board.put(i,temp);
         }
     }

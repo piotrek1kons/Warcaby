@@ -29,15 +29,20 @@ public class RuchGraczaThread implements Callable<Player> {
     @Override
     public Player call() throws Exception {
 
+        System.out.println("czeka na dane uzytkownika");
         // TODO pobranie od klienta loginu i hasła gracza i utworzenie obiektu użytkownika
         String[] daneUzytkownika = in.readLine().split(";");
-        player  = new Player(new User(daneUzytkownika[0], Integer.parseInt(daneUzytkownika[1]), Integer.parseInt(daneUzytkownika[2]), Integer.parseInt(daneUzytkownika[3])),isWhite);
+        System.out.println("wczytano dane uzytkownika");
 
+        player  = new Player(new User(daneUzytkownika[0], Integer.parseInt(daneUzytkownika[1]), Integer.parseInt(daneUzytkownika[2]), Integer.parseInt(daneUzytkownika[3])),isWhite);
+        System.out.println("tworzy obiekt uzytkownika uzytkownika");
         // TODO gra się zakończy gdy gracz otrzyma max punktów lub upłynie czas poświęcony na grę
         boolean isGameOn = true;
 
         while (isGameOn){
+            System.out.println("wchodzi w gre");
             isGameOn = serverCondition.wykonajRuch(in, out, player);
+            System.out.println("skonczylo grac");
         }
 
         return player;
