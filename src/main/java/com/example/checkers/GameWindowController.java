@@ -334,23 +334,17 @@ public class GameWindowController implements Initializable {
     }
 
     public Rectangle getRectangleAt(int x, int y) {
-        String rectId = "#" + positionToString(x, y);
+        int xx = (x / squareSize) + (int)thisField.getX();
+        int yy = (y / squareSize) + ((int)thisField.getY());
+
+
+        String rectId = "#" + positionToString(xx, yy);
         return (Rectangle) boardGridPane.lookup(rectId);
     }
 
     public Color getRectangleColor(int x, int y) {
-        int xx = (x / squareSize);
-        if (lastX < x){
-            xx++;
-        } else {
-            xx--;
-        }
-        int yy = (y / squareSize);
-        if (yy < 0){
-            yy *= (-1);
-        }
 
-        Rectangle rect = getRectangleAt(xx, yy);
+        Rectangle rect = getRectangleAt(x, y);
         if (rect != null) {
             return (Color) rect.getFill();
         }
