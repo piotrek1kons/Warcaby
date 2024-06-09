@@ -43,7 +43,7 @@ public class Pawn {
 
     // sprawdza czy pole znajduje się na planszy
     public boolean isOnBoard(Character chDirection, int yDirection){
-        if (chDirection <= 'A' || chDirection > height) {
+        if (chDirection < 'A' || chDirection > height) {
             return false;
         }
 
@@ -84,6 +84,7 @@ public class Pawn {
         if(isOnBoard(chp, yp)) {
             //sprawdza czy pole jest wolne
             if (isFieldFree(board.getField(chp, yp))) {
+                System.out.println(chp + ";" + yp);
                 return chp + ";" + yp;
             } else {
                 return checkKill(chp,yp,increment,board);
@@ -101,47 +102,50 @@ public class Pawn {
         int yp = getY();
 
         if(firstKill) {
-            temp = checkMove(chp--,yp--,-1,board);
+            temp = checkMove((char)(chp - 1),yp - 1,-1,board);
             if(temp != null){
                 moves.add(temp);
             }
 
-            temp = checkMove(chp--,yp++,1,board);
+            temp = checkMove((char)(chp - 1),yp + 1,1,board);
             if(temp != null){
                 moves.add(temp);
             }
 
-            temp = checkMove(chp++,yp++,1,board);
+            temp = checkMove((char)(chp + 1),yp - 1,1,board);
             if(temp != null){
                 moves.add(temp);
             }
 
-            temp = checkMove(chp++,yp--,1,board);
+            temp = checkMove((char)(chp + 1),yp + 1,1,board);
             if(temp != null){
                 moves.add(temp);
             }
 
         }else{
             if(isWhite){
-                temp = checkMove(chp--,yp--,-1,board);
+                temp = checkMove((char)(chp - 1),yp - 1,-1,board);
                 if(temp != null){
                     moves.add(temp);
                 }
-                temp = checkMove(chp--,yp++,1,board);
+                temp = checkMove((char)(chp - 1),yp + 1,1,board);
                 if(temp != null){
                     moves.add(temp);
                 }
             }else {
-                temp = checkMove(chp++,yp--,-1,board);
+                temp = checkMove((char)(chp + 1),yp - 1,-1,board);
                 if(temp != null){
                     moves.add(temp);
                 }
-                temp = checkMove(chp++,yp++,1,board);
+                temp = checkMove((char)(chp + 1),yp + 1,1,board);
                 if(temp != null){
                     moves.add(temp);
                 }
             }
+
         }
+
+
 
         String [] movesArray = new String[moves.size()];
         for(int i = 0; i < moves.size(); i++){

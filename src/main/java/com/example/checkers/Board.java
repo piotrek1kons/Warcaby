@@ -62,7 +62,7 @@ public class Board {
 
             for(int j = 0; j < width; j++){
                 if(pawn){
-                    temp.get(j+1).setPawn(new Pawn(false,i,i+1));
+                    temp.get(j+1).setPawn(new Pawn(false,i,j+1));
                     temp.put(j+1, temp.get(j+1));
                 }
                 pawn = !pawn;
@@ -76,7 +76,7 @@ public class Board {
 
             for(int j = 0; j < width; j++){
                 if(pawn){
-                    temp.get(j+1).setPawn(new Pawn(true,i,i+1));
+                    temp.get(j+1).setPawn(new Pawn(true,i,j+1));
                     temp.put(j+1, temp.get(j+1));
                 }
                 pawn = !pawn;

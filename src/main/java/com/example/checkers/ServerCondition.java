@@ -51,6 +51,7 @@ public class ServerCondition {
             // wybranie pionka do ruszenia
             String[] odpowiedz = in.readLine().split(";");  // CH;Y
             System.out.println("Odebrano wybór pionka " + odpowiedz[0]);
+            System.out.println("Odebrano wybór pionka " + odpowiedz[1]);
 
             // TODO JEŚLI OTRZYMA KOMUNIKAT END - KONIEC GRY
             if (odpowiedz[0].equals("END")){
