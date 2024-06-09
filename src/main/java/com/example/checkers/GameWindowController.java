@@ -5,12 +5,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -39,29 +39,32 @@ public class GameWindowController implements Initializable {
     @FXML
     private Pane boardPane; //panel z planszą - będzie ciężko :(
     @FXML
-    private RowConstraints A,B,C,D,E,F,G,H;
-    @FXML
     private GridPane boardGridPane;
     @FXML
     private GridPane pawnsGridPane;
 
+    // komunikacja z serwerem
+    private int port = 6666;
+    private BufferedReader in = null;
+    private BufferedWriter out = null;
+    private Socket socket = null;
+    String started = "NO";
+    boolean cont = true;
+    boolean timeStop = false;
+    String[] mozliweRuchy = null;
+
 
     // --------
-    private int chosenPawnX = -1;
-    private int chosenPawnY = -1;
-
-    private Rectangle thisField = null;
-    private int chosenFieldX = -1;
-    private int chosenFieldY = -1;
-
-    private double lastX;
-    private double lastY;
-
+    private String chosenPawn = "NULL";
+    private Rectangle thisField;
+    private String chosenField = "NULL";
     private int squareSize = 50;
     private int circleRadius = 18;
 
 
     private Color fieldColor = Color.rgb(145, 18, 43);
+    private Color fieldColorHighligh = Color.rgb(239, 128, 150);
+    private Color pickedPawn = Color.rgb(85, 156, 173);
 
 
     private User user = new User("test",1,2,3);
@@ -276,9 +279,42 @@ public class GameWindowController implements Initializable {
         return msg;
     }
 
+    public void getChosenField(String id, Color color){
+
+        if (color == fieldColor){
+            chosenField = id;
+        } else {
+            chosenField = thisField.getId();
+        }
+    }
+
+    // ONMOUSE EVENTS - RECTANGLE
+    public void rectanglePressed(MouseEvent event, Rectangle rect){
+        if (rect.getFill().equals(fieldColorHighligh)){
+            chosenField = rect.getId();
+
+            try {
+                if (timeStop) {
+                    out.write("NULL;NULL");
+                    out.newLine();
+                    out.flush();
+                } else {
+                    out.write(chosenField);
+                    out.newLine();
+                    out.flush();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
     public void createBoard() {
             boolean white = true;
             //boardGridPane.setGridLinesVisible(true);
+        boardGridPane.setAlignment(Pos.CENTER);
+        pawnsGridPane.setAlignment(Pos.CENTER);
 
             for (int row = 0; row < 8; row++) {
                 for (int col = 0; col < 8; col++) {
@@ -293,7 +329,9 @@ public class GameWindowController implements Initializable {
 
                     white = !white;
 
-                    rect.setId(positionToString(col,row));
+                    String id = positionToString(col,row);
+                    rect.setId(id);
+                    rect.setOnMousePressed(event -> rectanglePressed(event, rect));
                     boardGridPane.add(rect, col, row);
                 }
                 white = !white;
@@ -334,65 +372,31 @@ public class GameWindowController implements Initializable {
     }
 
     public Rectangle getRectangleAt(int x, int y) {
-        int xx = (x / squareSize) + (int)thisField.getX();
-        int yy = (y / squareSize) + ((int)thisField.getY());
-
-
-        String rectId = "#" + positionToString(xx, yy);
+        String rectId = "#" + positionToString(x, y);
         return (Rectangle) boardGridPane.lookup(rectId);
     }
+// ONMOUSE EVENTS - CIRCLE
 
-    public Color getRectangleColor(int x, int y) {
+    public void circlePressed(MouseEvent event, int x, int y, Circle circle){
 
-        Rectangle rect = getRectangleAt(x, y);
-        if (rect != null) {
-            return (Color) rect.getFill();
-        }
-        return null; // or throw an exception if you prefer
-    }
+        try {
+            if (timeStop) {
+                out.write("NULL;NULL");
+                out.newLine();
+                out.flush();
+            } else {
+                thisField = getRectangleAt(x,y);
+                chosenPawn = thisField.getId();
+                circle.setFill(pickedPawn);
 
-    // MOUSE EVENTS - przesuwanie pionka
-    public void pressed(MouseEvent event, int x, int y){
-        chosenPawnX = x;
-        chosenPawnY = y;
-        thisField = getRectangleAt(x,y);
-    }
-
-    public void dragged(MouseEvent event, Piece p){
-        lastX = p.getX();
-        lastY = p.getY();
-
-        p.setX(lastX + event.getX());
-        p.setY(lastY + event.getY());
-        p.draw();
-    }
-
-    public void released(MouseEvent event, Piece p){
-
-        int gridx = (int)p.getX() / squareSize;
-        int gridy = (int)p.getY() / squareSize;
-
-        p.setX(squareSize * gridx);
-        p.setY(squareSize * gridy);
-
-        Color temp = getRectangleColor((int)p.getX(),(int)p.getY());
-
-        if(temp!=null && temp.equals(fieldColor)){
-            chosenFieldX = (int)p.getX();
-            chosenFieldY = (int)p.getY();
-        } else {
-            p.setX(chosenPawnX);
-            p.setY(chosenPawnX);
-
-            chosenFieldX = chosenPawnY;
-            chosenFieldY = chosenPawnY;
+                out.write(chosenPawn);
+                out.newLine();
+                out.flush();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-
-        chosenPawnX = -1;
-        chosenPawnY = -1;
-
-        p.draw();
     }
 
     public StackPane kolo(Color color, boolean isQueen, int x, int y){
@@ -403,9 +407,7 @@ public class GameWindowController implements Initializable {
         circle.setFill(color);
         Piece p = new Piece(x,y,circle);
 
-        circle.setOnMousePressed(event -> pressed(event, x,y));
-        circle.setOnMouseDragged(event -> dragged(event, p));
-        circle.setOnMouseReleased(event -> released(event, p));
+        circle.setOnMousePressed(event -> circlePressed(event, x,y, circle));
 
 
         stackPane.getChildren().add(circle);
@@ -475,23 +477,14 @@ public class GameWindowController implements Initializable {
     public void komunikacjaZServerem(){
         //createBoard();
 
-        // komunikacja z serwerem
-        int port = 6666;
-        BufferedReader in = null;
-        BufferedWriter out = null;
-        Socket socket = null;
-
         try {
             socket = new Socket("127.0.0.1", port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-            String started = "NO";
-            boolean cont = true;
-            boolean timeStop = false;
+
             String[] board = null;
             String wybranyPionek = "";
-            String mozliweRuchy = "";
             String wybranyRuch = "";
             String czyKolejnyRuch = "";
 
@@ -507,98 +500,74 @@ public class GameWindowController implements Initializable {
             // TODO kiedy zegar dojdzie do zera wysyła info do serwera że gra zakończona
             // TODO serwer powinien wyzerować użytkownikowi wszystkie punkty żeby na pewno przegrał
 
-            while (cont){
+            while (cont) {
                 // oczekiwanie na swoją kolej
                 started = in.readLine();
                 System.out.println("Odebrano START");
 
-                while (started.equals("START")){
+                while (started.equals("START")) {
                     // 1. odebranie tablicy od servera
                     // oddzielone spacjami ; W->biały ; B->czarny ; WQ->biała królowa ; BQ->czarna królowa ; NULL->puste pole
                     board = in.readLine().split(" ");
                     wybranyPionek = "NULL;NULL";
                     System.out.println("Odebrano aktualizację tablicy");
 
-                    // TODO wyświetlanie tablicy (trzeba będzie wyczyścić poprzednie ustawienia przed żeby się nie nakładało)
-                    if (board != null){
+                    if (board != null) {
                         aktualizujBoarda(board);
                     }
 
-
             /*
                     TODO uruchomienie zegara
-                    TODO wybranie pionka tak żeby był zapisany jako String w formacie CH;Y
              */
 
                     // 2. wysłanie wybranego pionka na serwer (CH;Y) (jeżeli czas sie skończył to "END")
-                    if (timeStop){
-                        out.write("NULL;NULL");
-                        out.newLine();
-                        out.flush();
-
+                    // circlePressed
+                    if (timeStop) {
                         cont = false;
                         started = "NO";
                         break;
-                    } else {
-                        out.write(wybranyRuch);
-                        out.newLine();
-                        out.flush();
                     }
+                        // 3. pobranie tablicy możliwych ruchów
+                        mozliweRuchy = in.readLine().split(" ");
 
-                    // 3. pobranie tablicy możliwych ruchów
-                    mozliweRuchy = in.readLine();
+                        if (mozliweRuchy[0].contains("NULL")) {
+                            started = "NO";
+                            break;
+                        } else {
+                            for (String id : mozliweRuchy){
+                                String rectId = "#" + id;
+                                Rectangle rec = (Rectangle) boardGridPane.lookup(rectId);
+                                rec.setFill(fieldColorHighligh);
+                            }
+                        }
 
-                    if (mozliweRuchy.contains("NULL")){
-                        started = "NO";
-                        break;
-                    } else {
-                        /*
-                            TODO tutaj będzie wyświetlanie możliwych ruchów w tablicy (zmiana koloru płytki na danej pozycji)
-                            TODO a potem wybranie pionka tak żeby był zapisany jako String w formacie CH;Y
-                     */
-                    }
+                        // 4. wysłanie wybranego ruchu na serwer (jeżeli czas sie skończył to "END")
+                        // rectanglePressed
+                        if (timeStop) {
+                            cont = false;
+                            started = "NO";
+                            break;
+                        }
 
-                    // 4. wysłanie wybranego ruchu na serwer (jeżeli czas sie skończył to "END")
-
-                    /*
-                            TODO tutaj będzie wybór kolejnego możliwego ruchu
-                     */
-
-
-                    if (timeStop){
-                        out.write("END");
-                        out.newLine();
-                        out.flush();
-
-                        cont = false;
-                        started = "NO";
-                        break;
-                    } else {
-                        out.write(wybranyPionek);
-                        out.newLine();
-                        out.flush();
-                    }
-
-                    // 5. odebranie aktualizacji tablicy z serwera
-                    board = in.readLine().split(" ");
-                    aktualizujBoarda(board);
+                        // 5. odebranie aktualizacji tablicy z serwera
+                        board = in.readLine().split(" ");
+                        if (board != null) {
+                            aktualizujBoarda(board);
+                        }
 
 
-                    // 6. if (serwer == NEXT) -> ... else if (serwer == STOP) -> ...
-                    // 7. jeśli NEXT: wraca do pkt. 1
-                    // 8. w przeciwnym razie czeka na swoją kolej i też wraca do pkt 1
-                    czyKolejnyRuch = in.readLine();
+                        // 6. if (serwer == NEXT) -> ... else if (serwer == STOP) -> ...
+                        // 7. jeśli NEXT: wraca do pkt. 1
+                        // 8. w przeciwnym razie czeka na swoją kolej i też wraca do pkt 1
+                        czyKolejnyRuch = in.readLine();
 
-                    if (czyKolejnyRuch.equals("STOP")){
-                        // TODO zatrzymanie zegara
-                        started = "NO";
-                        break;
+                        if (czyKolejnyRuch.equals("STOP")) {
+                            // TODO zatrzymanie zegara
+                            started = "NO";
+                            break;
+                        }
                     }
                 }
-            }
-
-
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
@@ -628,7 +597,7 @@ public class GameWindowController implements Initializable {
     }
 
     // TODO wstawić to do użytkownika
-    public void setLogin(User user){
+    public void setUser(User user){
         this.user = user;
     }
 }
