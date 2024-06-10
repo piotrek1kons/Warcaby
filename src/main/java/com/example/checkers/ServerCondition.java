@@ -27,14 +27,12 @@ public class ServerCondition {
                 player.await();
             }
 
-            System.out.println("jeden gracz gra");
             doesSomeonePlay = true;
 
             if (!isGameOn){
                 return false;
             }
 
-            System.out.println("wysyla START");
             // TODO serwer wysyła info o rozpoczęciu ruchu
             out.write("START");  // poinformowanie klienta o rozpoczęciu ruchu
             out.newLine();
@@ -50,8 +48,7 @@ public class ServerCondition {
             // TODO serwer pobiera ruch od klienta
             // wybranie pionka do ruszenia
             String[] odpowiedz = in.readLine().split(";");  // CH;Y
-            System.out.println("Odebrano wybór pionka " + odpowiedz[0]);
-            System.out.println("Odebrano wybór pionka " + odpowiedz[1]);
+            System.out.println("Odebrano wybór pionka " + odpowiedz[0] + "  " + odpowiedz[1]);
 
             // TODO JEŚLI OTRZYMA KOMUNIKAT END - KONIEC GRY
             if (odpowiedz[0].equals("END")){
@@ -79,6 +76,7 @@ public class ServerCondition {
             // odebranie nowego ruchu od klienta
             odpowiedz = in.readLine().split(";"); // CH;Y
             System.out.println("Odebrano nowy ruch od klienta");
+
             if (odpowiedz[0].equals("NULL")){
                 isGameOn = false;
                 p.resetPoints();
@@ -143,12 +141,6 @@ public class ServerCondition {
                 }
             }
 
-
-            // jeśli nie ma ruchu -> idzie dalej
-//            out.write("STOP");  // koniec ruchu użytkownika
-//            out.newLine();
-//            out.flush();
-
             // TODO flaga zmienia się w momencie jak gracz skończy wykonywać swój ruch
             doesSomeonePlay = false;
             player.signal();
@@ -169,7 +161,7 @@ public class ServerCondition {
         out.newLine();
         out.flush();
         for (int i=0; i<arr.length; i++){
-            System.out.println("wyslano: " + arr[i]);
+            System.out.println("wyslanieTablicy:  " + arr[i]);
             out.write(arr[i]);
             out.newLine();
             out.flush();
@@ -205,8 +197,6 @@ public class ServerCondition {
                     msg[k] += "NULL ";
                 }
             }
-
-            System.out.println("TABLICA KOMPRES: -> " + msg[k]);
 
             k++;
         }

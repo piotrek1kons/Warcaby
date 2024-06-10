@@ -33,7 +33,7 @@ public class Pawn {
         if (Math.abs(this.ch - ch) == 2 && Math.abs(this.y - y) == 2) {
             Character middleCh = (char) ((this.ch + ch) / 2);
             int middleY = (this.y + y) / 2;
-            System.out.println("pozucja pionka" +middleCh+ " " + middleY);
+
             if (board.getField(middleCh, middleY).getPawn() != null &&
                     board.getField(middleCh, middleY).getPawn().isWhite() != this.isWhite()) {
                 // Wykonaj bicie

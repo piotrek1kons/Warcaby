@@ -100,44 +100,10 @@ public class GameWindowController implements Initializable {
         return msg;
     }
 
-    public int[] stringToPosition(String string){
-        String[] tem = string.split(";");
-        int[] position = new int[2];
-        String y = tem[0];
-        int x = Integer.parseInt(tem[1]);
-        x--;
-        position[1] = x;
-
-        switch (y) {
-            case "A" -> position[0] = 0;
-            case "B" -> position[0] = 1;
-            case "C" -> position[0] = 2;
-            case "D" -> position[0] = 3;
-            case "E" -> position[0] = 4;
-            case "F" -> position[0] = 5;
-            case "G" -> position[0] = 6;
-            case "H" -> position[0] = 7;
-        }
-
-
-        return position;
-    }
-    public void getChosenField(String id, Color color){
-
-        if (color == fieldColor){
-            chosenField = id;
-        } else {
-            chosenField = thisField.getId();
-        }
-    }
-
     // ONMOUSE EVENTS - RECTANGLE
     public void rectanglePressed(MouseEvent event, Rectangle rect){
-        System.out.println("rectanglePressed klikniętko");
         if (rect.getFill().equals(fieldColorHighligh)){
             this.chosenField = rect.getId();
-
-            System.out.println("wyslano na serwer z rectanglePressed");
             try {
                 if (timeStop) {
                     out.write("NULL;NULL");
@@ -164,8 +130,6 @@ public class GameWindowController implements Initializable {
             rect.setFill(fieldColor);
 
         }
-
-        white = !white;
 
         String id = positionToString(x,y);
         rect.setId(id);
@@ -201,16 +165,12 @@ public class GameWindowController implements Initializable {
         System.out.print("\n-->" + this.chosenPawn);
         try {
             if (timeStop) {
-                System.out.println("wyslano na serwer z circlePressed - timeStop");
                 out.write("NULL;NULL");
                 out.newLine();
                 out.flush();
             } else {
-                System.out.println("wyslano na serwer z circlePressed");
                 thisField = getRectangleAt(x,y);
-                System.out.print("....." + thisField.getId() + ".....");
                 this.chosenPawn = thisField.getId();
-                System.out.print("....." + this.chosenPawn + ".....");
                 circle.setFill(pickedPawn);
 
                 out.write(this.chosenPawn);
@@ -221,8 +181,6 @@ public class GameWindowController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("   " + this.chosenPawn + " <--");
-        System.out.println("wyslano na serwer z circlePressed - zakończono");
 
     }
 
@@ -253,9 +211,7 @@ public class GameWindowController implements Initializable {
 
             for (int row = 0; row < 8; row++) {
                 String[] arr = board[row].split(" ");
-                System.out.println("ROW " + row + "-->\t");
                 for (int col = 0; col < 8; col++) {
-                    System.out.print(arr[col] + " ");
                     String piece = arr[col];
                         switch (piece) {
                             case "W":
@@ -270,13 +226,10 @@ public class GameWindowController implements Initializable {
                             case "CQ":
                                 pawnsGridPane.add(kolo(Color.DARKGRAY, true, col, row), col, row);
                                 break;
-                            //case "NULL":
-                                //pawnsGridPane.add(prostokat(white))
                         }
 
                         white = !white;
                 }
-                System.out.println();
             }
         });
     }
@@ -320,11 +273,9 @@ public class GameWindowController implements Initializable {
             String czyKolejnyRuch = "";
 
             // wysłanie danych użytkownika na serwer
-            System.out.println("wysyla dane uzytkownika na serwer");
             out.write(user.toString());
             out.newLine();
             out.flush();
-            System.out.println("wyslano dane uzytkownika na serwer");
 
             // TODO wątek uruchamiający zegar
             // TODO zegar odlicza do zera
@@ -362,11 +313,9 @@ public class GameWindowController implements Initializable {
 
                     // 2. wysłanie wybranego pionka na serwer (CH;Y) (jeżeli czas sie skończył to "END")
                     // circlePressed
-                    System.out.println("Przed pętlą");
                     while (this.chosenPawn.equals("NULL")) {
                         Thread.sleep(500);
                     }
-                    System.out.println("Wyjście z pętli");
                     this.chosenPawn = "NULL";
 
                     if (timeStop) {
@@ -375,10 +324,9 @@ public class GameWindowController implements Initializable {
                         break;
                     }
 
-                    System.out.println("Czeka na ruchy");
                     // 3. pobranie tablicy możliwych ruchów
                     dlugoscTablicy = in.readLine();
-                    System.out.println("odebrano " + dlugoscTablicy);
+                    System.out.println("3. odebrano dlugoscTablicy" + dlugoscTablicy);
 
                     if (dlugoscTablicy.equals("NULL")) {
                         started = "NO";
@@ -387,12 +335,10 @@ public class GameWindowController implements Initializable {
                         mozliweRuchy = odebranieTablicy(in, Integer.parseInt(dlugoscTablicy));
                         for (String id : mozliweRuchy) {
                             String rectId = "#" + id;
-                            System.out.println("mozliwy ruch -> " + rectId);
                             Rectangle rec = (Rectangle) boardGridPane.lookup(rectId);
                             rec.setFill(fieldColorHighligh);
                         }
                     }
-
 
                     pawnsGridPane.setMouseTransparent(true);
 
@@ -418,7 +364,7 @@ public class GameWindowController implements Initializable {
 
                     // 5. odebranie aktualizacji tablicy z serwera
                     dlugoscTablicy = in.readLine();
-                    System.out.println("dlugosc tablicy: " + dlugoscTablicy);
+                    System.out.println("5. dlugosc tablicy: " + dlugoscTablicy);
                     board = odebranieTablicy(in, Integer.parseInt(dlugoscTablicy));
                     System.out.println("Odebrano aktualizacje tablicy");
                     if (board != null) {
@@ -435,6 +381,7 @@ public class GameWindowController implements Initializable {
                     if (czyKolejnyRuch.equals("STOP")) {
                         // TODO zatrzymanie zegara
                         started = "NO";
+                        System.out.println("Zatrzymano:  " + started);
                         break;
                     }
 
@@ -482,7 +429,7 @@ public class GameWindowController implements Initializable {
             out.write("OK");
             out.newLine();
             out.flush();
-            System.out.println("odebrano " + arr[i]);
+            System.out.println("odebranieTablicy:  " + arr[i]);
         }
 
         return arr;
