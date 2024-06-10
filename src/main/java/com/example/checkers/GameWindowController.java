@@ -175,6 +175,8 @@ public class GameWindowController implements Initializable {
     public void createBoard() {
         boolean white = true;
 
+        this.whichPlayerLabel.setText("Wait");
+
         boardGridPane.setAlignment(Pos.CENTER);
         pawnsGridPane.setAlignment(Pos.CENTER);
 
@@ -337,6 +339,8 @@ public class GameWindowController implements Initializable {
                 System.out.println("Odebrano START");
 
                 while (started.equals("START")) {
+                    Platform.runLater(() -> this.whichPlayerLabel.setText("Your turn"));
+
                     // 1. odebranie tablicy od servera
                     // oddzielone spacjami ; W->biały ; B->czarny ; WQ->biała królowa ; BQ->czarna królowa ; NULL->puste pole
 
@@ -435,6 +439,8 @@ public class GameWindowController implements Initializable {
 
                     mozliweRuchy = null;
                 }
+
+                Platform.runLater(() -> this.whichPlayerLabel.setText("Wait"));
             }
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
