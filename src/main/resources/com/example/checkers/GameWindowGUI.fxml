@@ -227,6 +227,7 @@
                   </ImageView>
                </graphic>
             </Button>
+<<<<<<< HEAD
             <Label alignment="CENTER" layoutX="31.0" layoutY="220.0" prefHeight="66.0" prefWidth="194.0" text="You" textFill="#fbf3e4">
                <font>
                   <Font name="Cooper Black" size="45.0" />
@@ -240,11 +241,16 @@
             <Label fx:id="username1Label" alignment="CENTER" layoutX="51.0" layoutY="283.0" prefHeight="33.0" prefWidth="153.0" text="Username 1" textFill="#fbf3e4">
                <font>
                   <Font name="Cooper Black" size="24.0" />
+=======
+            <Label alignment="CENTER" layoutX="27.0" layoutY="181.0" prefHeight="66.0" prefWidth="194.0" text="You" textFill="#fbf3e4">
+               <font>
+                  <Font name="Cooper Black" size="36.0" />
+>>>>>>> 9cf9404a3f33a153739e7a2ad5bb50dfa20dffeb
                </font>
             </Label>
-            <Label fx:id="username2Label" alignment="CENTER" layoutX="50.0" layoutY="450.0" prefHeight="33.0" prefWidth="153.0" text="Username 2" textFill="#fbf3e4">
+            <Label alignment="CENTER" layoutX="1.0" layoutY="359.0" prefHeight="66.0" prefWidth="254.0" text="Other player" textFill="#fbf3e4">
                <font>
-                  <Font name="Cooper Black" size="24.0" />
+                  <Font name="Cooper Black" size="36.0" />
                </font>
             </Label>
             <ImageView fitHeight="70.0" fitWidth="482.0" layoutX="-227.0" layoutY="550.0" pickOnBounds="true" preserveRatio="true">
@@ -257,6 +263,16 @@
                   <Image url="@img/pasek.png" />
                </image>
             </ImageView>
+            <Label fx:id="username1Label" alignment="CENTER" layoutX="21.0" layoutY="239.0" prefHeight="56.0" prefWidth="207.0" text="userName1" textFill="#fbf3e4">
+               <font>
+                  <Font name="Cooper Black" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="username2Label" alignment="CENTER" layoutX="22.0" layoutY="426.0" prefHeight="56.0" prefWidth="207.0" text="userName2" textFill="#fbf3e4">
+               <font>
+                  <Font name="Cooper Black" size="36.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </left>
