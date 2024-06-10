@@ -78,6 +78,7 @@ public class ServerCondition {
 
             // odebranie nowego ruchu od klienta
             odpowiedz = in.readLine().split(";"); // CH;Y
+            System.out.println("Odebrano nowy ruch od klienta");
             if (odpowiedz[0].equals("NULL")){
                 isGameOn = false;
                 p.resetPoints();

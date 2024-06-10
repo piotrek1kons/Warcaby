@@ -99,6 +99,28 @@ public class GameWindowController implements Initializable {
         return msg;
     }
 
+    public int[] stringToPosition(String string){
+        String[] tem = string.split(";");
+        int[] position = new int[2];
+        String y = tem[0];
+        int x = Integer.parseInt(tem[1]);
+        x--;
+        position[1] = x;
+
+        switch (y) {
+            case "A" -> position[0] = 0;
+            case "B" -> position[0] = 1;
+            case "C" -> position[0] = 2;
+            case "D" -> position[0] = 3;
+            case "E" -> position[0] = 4;
+            case "F" -> position[0] = 5;
+            case "G" -> position[0] = 6;
+            case "H" -> position[0] = 7;
+        }
+
+
+        return position;
+    }
     public void getChosenField(String id, Color color){
 
         if (color == fieldColor){
@@ -110,8 +132,9 @@ public class GameWindowController implements Initializable {
 
     // ONMOUSE EVENTS - RECTANGLE
     public void rectanglePressed(MouseEvent event, Rectangle rect){
+        System.out.println("rectanglePressed klikniętko");
         if (rect.getFill().equals(fieldColorHighligh)){
-            chosenField = rect.getId();
+            this.chosenField = rect.getId();
 
             System.out.println("wyslano na serwer z rectanglePressed");
             try {
@@ -120,7 +143,7 @@ public class GameWindowController implements Initializable {
                     out.newLine();
                     out.flush();
                 } else {
-                    out.write(chosenField);
+                    out.write(this.chosenField);
                     out.newLine();
                     out.flush();
                 }
@@ -166,25 +189,31 @@ public class GameWindowController implements Initializable {
 
     // ONMOUSE EVENTS - CIRCLE
     public void circlePressed(MouseEvent event, int x, int y, Circle circle){
-
-        System.out.println("wyslano na serwer z circlePressed");
+        System.out.print("\n-->" + this.chosenPawn);
         try {
             if (timeStop) {
+                System.out.println("wyslano na serwer z circlePressed - timeStop");
                 out.write("NULL;NULL");
                 out.newLine();
                 out.flush();
             } else {
+                System.out.println("wyslano na serwer z circlePressed");
                 thisField = getRectangleAt(x,y);
-                chosenPawn = thisField.getId();
+                System.out.print("....." + thisField.getId() + ".....");
+                this.chosenPawn = thisField.getId();
+                System.out.print("....." + this.chosenPawn + ".....");
                 circle.setFill(pickedPawn);
 
-                out.write(chosenPawn);
+                out.write(this.chosenPawn);
                 out.newLine();
                 out.flush();
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        System.out.println("   " + this.chosenPawn + " <--");
+        System.out.println("wyslano na serwer z circlePressed - zakończono");
 
     }
 
@@ -315,16 +344,21 @@ public class GameWindowController implements Initializable {
 
                     // 2. wysłanie wybranego pionka na serwer (CH;Y) (jeżeli czas sie skończył to "END")
                     // circlePressed
-                    while(chosenPawn.equals("NULL")){}
-                    chosenPawn = "NULL";
+                    System.out.println("Przed pętlą");
+                    while(this.chosenPawn.equals("NULL")){
+                        System.out.print(this.chosenPawn + "....");
+                        Thread.sleep(500);
+                    }
+                    System.out.println("Wyjście z pętli");
+                    this.chosenPawn = "NULL";
 
                     if (timeStop) {
                         cont = false;
                         started = "NO";
                         break;
                     }
-                    System.out.println("Czeka na ruchy");
 
+                    System.out.println("Czeka na ruchy");
                     // 3. pobranie tablicy możliwych ruchów
                     dlugoscTablicy = in.readLine();
                     System.out.println("odebrano " + dlugoscTablicy);
@@ -346,8 +380,11 @@ public class GameWindowController implements Initializable {
 
                         // 4. wysłanie wybranego ruchu na serwer (jeżeli czas sie skończył to "END")
                         // rectanglePressed
-                        while(chosenField.equals("NULL")){}
-                        chosenField = "NULL";
+                        while(this.chosenField.equals("NULL")){
+                            System.out.print(this.chosenField + "....");
+                            Thread.sleep(500);
+                        }
+                        this.chosenField = "NULL";
 
                         if (timeStop) {
                             cont = false;
@@ -357,6 +394,7 @@ public class GameWindowController implements Initializable {
 
                         // 5. odebranie aktualizacji tablicy z serwera
                         dlugoscTablicy = in.readLine();
+                        System.out.println("Odebrano aktualizacje tablicy");
                         board = odebranieTablicy(in, Integer.parseInt(dlugoscTablicy));
                         if (board != null) {
                             aktualizujBoarda(board);
@@ -366,6 +404,7 @@ public class GameWindowController implements Initializable {
                         // 7. jeśli NEXT: wraca do pkt. 1
                         // 8. w przeciwnym razie czeka na swoją kolej i też wraca do pkt 1
                         czyKolejnyRuch = in.readLine();
+                        System.out.println("Sprawdzono czy kolejny ruch jest możliwy -> " + czyKolejnyRuch);
 
                         if (czyKolejnyRuch.equals("STOP")) {
                             // TODO zatrzymanie zegara
@@ -377,6 +416,8 @@ public class GameWindowController implements Initializable {
                     }
                 }
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
             if (in != null){
