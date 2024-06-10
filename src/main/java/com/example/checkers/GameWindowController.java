@@ -19,6 +19,7 @@ import javafx.scene.shape.Rectangle;
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 import java.util.concurrent.FutureTask;
 
@@ -344,7 +345,7 @@ public class GameWindowController implements Initializable {
                     System.out.println("Odebrano aktualizację tablicy");
 
                     if (board != null) {
-                        for(String el : board){
+                        for (String el : board) {
                             System.out.println(el);
                         }
                         aktualizujBoarda(board);
@@ -357,8 +358,7 @@ public class GameWindowController implements Initializable {
                     // 2. wysłanie wybranego pionka na serwer (CH;Y) (jeżeli czas sie skończył to "END")
                     // circlePressed
                     System.out.println("Przed pętlą");
-                    while(this.chosenPawn.equals("NULL")){
-                        System.out.print(this.chosenPawn + "....");
+                    while (this.chosenPawn.equals("NULL")) {
                         Thread.sleep(500);
                     }
                     System.out.println("Wyjście z pętli");
@@ -375,69 +375,69 @@ public class GameWindowController implements Initializable {
                     dlugoscTablicy = in.readLine();
                     System.out.println("odebrano " + dlugoscTablicy);
 
-                        if (dlugoscTablicy.equals("NULL")) {
-                            started = "NO";
-                            break;
-                        } else {
-                            mozliweRuchy = odebranieTablicy(in, Integer.parseInt(dlugoscTablicy));
-                            for (String id : mozliweRuchy){
-                                String rectId = "#" + id;
-                                System.out.println("mozliwy ruch -> " + rectId);
-                                Rectangle rec = (Rectangle) boardGridPane.lookup(rectId);
-                                rec.setFill(fieldColorHighligh);
-                            }
-                        }
-
-
-
-                        pawnsGridPane.setMouseTransparent(true);
-
-                        // 4. wysłanie wybranego ruchu na serwer (jeżeli czas sie skończył to "END")
-                        // rectanglePressed
-                        while(this.chosenField.equals("NULL")){
-                            System.out.print(this.chosenField + "....");
-                            Thread.sleep(500);
-                        }
-                        this.chosenField = "NULL";
-
-                        if (timeStop) {
-                            cont = false;
-                            started = "NO";
-                            break;
-                        }
-
-                        for (String id : mozliweRuchy){
+                    if (dlugoscTablicy.equals("NULL")) {
+                        started = "NO";
+                        break;
+                    } else {
+                        mozliweRuchy = odebranieTablicy(in, Integer.parseInt(dlugoscTablicy));
+                        for (String id : mozliweRuchy) {
                             String rectId = "#" + id;
+                            System.out.println("mozliwy ruch -> " + rectId);
                             Rectangle rec = (Rectangle) boardGridPane.lookup(rectId);
-                            rec.setFill(fieldColor);
+                            rec.setFill(fieldColorHighligh);
                         }
-                        pawnsGridPane.setMouseTransparent(false);
-
-                        // 5. odebranie aktualizacji tablicy z serwera
-                        dlugoscTablicy = in.readLine();
-                    System.out.println("dlugosc tablicy: " + dlugoscTablicy);
-                        board = odebranieTablicy(in, Integer.parseInt(dlugoscTablicy));
-                    System.out.println("Odebrano aktualizacje tablicy");
-                        if (board != null) {
-                            aktualizujBoarda(board);
-
-                        }
-
-                        // 6. if (serwer == NEXT) -> ... else if (serwer == STOP) -> ...
-                        // 7. jeśli NEXT: wraca do pkt. 1
-                        // 8. w przeciwnym razie czeka na swoją kolej i też wraca do pkt 1
-                        czyKolejnyRuch = in.readLine();
-                        System.out.println("Sprawdzono czy kolejny ruch jest możliwy -> " + czyKolejnyRuch);
-
-                        if (czyKolejnyRuch.equals("STOP")) {
-                            // TODO zatrzymanie zegara
-                            started = "NO";
-                            break;
-                        }
-
-                        mozliweRuchy = null;
                     }
+
+
+                    pawnsGridPane.setMouseTransparent(true);
+
+                    // 4. wysłanie wybranego ruchu na serwer (jeżeli czas sie skończył to "END")
+                    // rectanglePressed
+                    while (this.chosenField.equals("NULL")) {
+                        Thread.sleep(500);
+                    }
+                    this.chosenField = "NULL";
+
+                    if (timeStop) {
+                        cont = false;
+                        started = "NO";
+                        break;
+                    }
+
+                    for (String id : mozliweRuchy) {
+                        String rectId = "#" + id;
+                        Rectangle rec = (Rectangle) boardGridPane.lookup(rectId);
+                        rec.setFill(fieldColor);
+                    }
+                    pawnsGridPane.setMouseTransparent(false);
+
+                    // 5. odebranie aktualizacji tablicy z serwera
+                    dlugoscTablicy = in.readLine();
+                    System.out.println("dlugosc tablicy: " + dlugoscTablicy);
+                    board = odebranieTablicy(in, Integer.parseInt(dlugoscTablicy));
+                    System.out.println("Odebrano aktualizacje tablicy");
+                    if (board != null) {
+                        aktualizujBoarda(board);
+
+                    }
+
+                    // 6. if (serwer == NEXT) -> ... else if (serwer == STOP) -> ...
+                    // 7. jeśli NEXT: wraca do pkt. 1
+                    // 8. w przeciwnym razie czeka na swoją kolej i też wraca do pkt 1
+                    czyKolejnyRuch = in.readLine();
+                    System.out.println("Sprawdzono czy kolejny ruch jest możliwy -> " + czyKolejnyRuch);
+
+                    if (czyKolejnyRuch.equals("STOP")) {
+                        // TODO zatrzymanie zegara
+                        started = "NO";
+                        break;
+                    }
+
+                    mozliweRuchy = null;
                 }
+            }
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
