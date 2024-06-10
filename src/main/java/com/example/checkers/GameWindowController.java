@@ -337,8 +337,9 @@ public class GameWindowController implements Initializable {
                 // oczekiwanie na swoją kolej
                 started = in.readLine();
                 System.out.println("Odebrano START");
-
+                System.out.println(started);
                 while (started.equals("START")) {
+
                     Platform.runLater(() -> this.whichPlayerLabel.setText("Your turn"));
 
                     // 1. odebranie tablicy od servera

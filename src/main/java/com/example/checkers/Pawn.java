@@ -33,10 +33,12 @@ public class Pawn {
         if (Math.abs(this.ch - ch) == 2 && Math.abs(this.y - y) == 2) {
             Character middleCh = (char) ((this.ch + ch) / 2);
             int middleY = (this.y + y) / 2;
+            System.out.println("pozucja pionka" +middleCh+ " " + middleY);
             if (board.getField(middleCh, middleY).getPawn() != null &&
                     board.getField(middleCh, middleY).getPawn().isWhite() != this.isWhite()) {
                 // Wykonaj bicie
                 board.getField(middleCh, middleY).getPawn().kill();
+                board.getField(middleCh, middleY).setPawn(null);
                 czyBicie = true;
             }
         }
@@ -74,25 +76,32 @@ public class Pawn {
     }
 
     public String checkKill(Character chp, int yp, int increment, Board board){
-        if (board.getField(chp, yp).getPawn().isWhite == this.isWhite) {
-
-            //koniec ruchu
-        } else{
-            System.out.println(chIncerment(chp,increment,1) +";"+ yp + increment);
-            if (isOnBoard(chIncerment(chp,increment, 1), yp + increment)) {
-
-                //sprawdza czy pole jest wolne
-                if (isFieldFree(board.getField(chIncerment(chp,increment, 1), yp + increment))) {
-                    //zabicie pionka
-                    //podswietlenie pola
-                    return chIncerment(chp,increment, 1) + ";" + (yp + increment);
-                } else {
-                    //koniec ruchu
+        if(this.isWhite){
+            if (board.getField(chp, yp).getPawn().isWhite != this.isWhite) {
+                System.out.println(chIncerment(chp,increment,1) +";"+ yp + increment);
+                if (isOnBoard(chIncerment(chp,increment, 1), yp + increment)) {
+                    //sprawdza czy pole jest wolne
+                    if (isFieldFree(board.getField(chIncerment(chp,increment,1), yp + increment))) {
+                        //zabicie pionka
+                        //podswietlenie pola
+                        return chIncerment(chp,increment, 1) + ";" + (yp + increment);
+                    }
                 }
-            }else{
-                //koniec ruchu
+            }
+        }else{
+            if (board.getField(chp, yp).getPawn().isWhite != this.isWhite) {
+                System.out.println(chIncerment(chp,increment,1) +";"+ yp + increment);
+                if (isOnBoard(chIncerment(chp,increment, 1), yp + increment)) {
+                    //sprawdza czy pole jest wolne
+                    if (isFieldFree(board.getField(chIncerment(chp,increment, 1), yp + increment))) {
+                        //zabicie pionka
+                        //podswietlenie pola
+                        return chIncerment(chp,increment, 1) + ";" + (yp + increment);
+                    }
+                }
             }
         }
+
         return null;
     }
 
@@ -119,22 +128,22 @@ public class Pawn {
         int yp = getY();
 
         if(firstKill) {
-            temp = checkMove((char)(chp - 1),yp - 1,-1,board);
+            temp = checkKill((char)(chp - 1),yp - 1,-1,board);
             if(temp != null){
                 moves.add(temp);
             }
 
-            temp = checkMove((char)(chp - 1),yp + 1,1,board);
+            temp = checkKill((char)(chp - 1),yp + 1,1,board);
             if(temp != null){
                 moves.add(temp);
             }
 
-            temp = checkMove((char)(chp + 1),yp - 1,1,board);
+            temp = checkKill((char)(chp + 1),yp - 1,-1,board);
             if(temp != null){
                 moves.add(temp);
             }
 
-            temp = checkMove((char)(chp + 1),yp + 1,1,board);
+            temp = checkKill((char)(chp + 1),yp + 1,1,board);
             if(temp != null){
                 moves.add(temp);
             }
