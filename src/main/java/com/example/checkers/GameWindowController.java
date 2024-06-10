@@ -46,6 +46,9 @@ public class GameWindowController implements Initializable {
     String started = "NO";
     boolean cont = true, timeStop = false;
     String[] mozliweRuchy = null;
+    Thread th;
+    ClockThread ct;
+
 
     // --------
     private String chosenPawn = "NULL", chosenField = "NULL";
@@ -71,9 +74,11 @@ public class GameWindowController implements Initializable {
         });
 
         Clock clock = new Clock(minuteLabel, secondLabel);
-        ClockThread ct = new ClockThread(clock);
+        this.ct = new ClockThread(clock);
         FutureTask ft = new FutureTask<>(ct);
-        new Thread(ft).start();
+        th = new Thread(ft);
+        th.start();
+
 
         Platform.runLater(() -> createBoard());
         Platform.runLater(() -> ustawienieStartowe());
@@ -171,6 +176,7 @@ public class GameWindowController implements Initializable {
             } else {
                 thisField = getRectangleAt(x,y);
                 this.chosenPawn = thisField.getId();
+                System.out.print(this.chosenPawn);
                 circle.setFill(pickedPawn);
 
                 out.write(this.chosenPawn);
@@ -301,15 +307,13 @@ public class GameWindowController implements Initializable {
                     System.out.println("Odebrano aktualizację tablicy");
 
                     if (board != null) {
-                        for (String el : board) {
-                            System.out.println(el);
-                        }
                         aktualizujBoarda(board);
                     }
 
             /*
                     TODO uruchomienie zegara
              */
+                    this.ct.resume();
 
                     // 2. wysłanie wybranego pionka na serwer (CH;Y) (jeżeli czas sie skończył to "END")
                     // circlePressed
@@ -321,6 +325,7 @@ public class GameWindowController implements Initializable {
                     if (timeStop) {
                         cont = false;
                         started = "NO";
+                        Platform.runLater(() -> this.whichPlayerLabel.setText("You lose!!!"));
                         break;
                     }
 
@@ -328,7 +333,7 @@ public class GameWindowController implements Initializable {
                     dlugoscTablicy = in.readLine();
                     System.out.println("3. odebrano dlugoscTablicy" + dlugoscTablicy);
 
-                    if (dlugoscTablicy.equals("NULL")) {
+                    if (dlugoscTablicy.equals("NULL") || dlugoscTablicy == null) {
                         started = "NO";
                         break;
                     } else {
@@ -380,6 +385,7 @@ public class GameWindowController implements Initializable {
 
                     if (czyKolejnyRuch.equals("STOP") || czyKolejnyRuch.equals("NULL")) {
                         // TODO zatrzymanie zegara
+                        this.ct.pause();
                         started = "NO";
                         System.out.println("Zatrzymano:  " + started);
                         break;

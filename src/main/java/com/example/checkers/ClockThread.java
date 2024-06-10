@@ -4,16 +4,22 @@ import java.util.concurrent.Callable;
 
 public class ClockThread implements Callable<Clock> {
     private Clock clock;
+    private final Object pauseLock = new Object();
+    private boolean paused = true;
     public ClockThread(Clock clock){
         this.clock = clock;
     }
 
     @Override
     public Clock call() throws Exception {
-
         clock.printClock();
 
         while (clock.isRunning()){
+            synchronized (pauseLock) {
+                while (paused) {
+                    pauseLock.wait();
+                }
+            }
             int sekundy = clock.getSekundy();
             int minuty = clock.getMinuty();
             clock.updateLabels(minuty, sekundy);
@@ -31,5 +37,18 @@ public class ClockThread implements Callable<Clock> {
         }
 
         return clock;
+    }
+
+    public void pause() {
+        synchronized (pauseLock) {
+            paused = true;
+        }
+    }
+
+    public void resume() {
+        synchronized (pauseLock) {
+            paused = false;
+            pauseLock.notifyAll();
+        }
     }
 }
