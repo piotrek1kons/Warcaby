@@ -175,7 +175,7 @@ public class GameWindowController implements Initializable {
 
                     String id = positionToString(col,row);
                     rect.setId(id);
-                    rect.setOnMousePressed(event -> rectanglePressed(event, rect));
+                    rect.setOnMouseClicked(event -> rectanglePressed(event, rect));
                     boardGridPane.add(rect, col, row);
                 }
                 white = !white;
