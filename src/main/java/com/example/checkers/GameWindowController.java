@@ -154,6 +154,23 @@ public class GameWindowController implements Initializable {
 
     }
 
+    public Rectangle prostokat(boolean white, int x, int y){
+        Rectangle rect = new Rectangle(squareSize, squareSize, squareSize, squareSize);
+
+        if (white) {
+            rect.setFill(Color.rgb(251, 243, 228));
+        } else {
+            rect.setFill(fieldColor);
+
+        }
+
+        white = !white;
+
+        String id = positionToString(x,y);
+        rect.setId(id);
+        rect.setOnMouseClicked(event -> rectanglePressed(event, rect));
+        return rect;
+    }
     public void createBoard() {
         boolean white = true;
 
@@ -162,24 +179,13 @@ public class GameWindowController implements Initializable {
 
             for (int row = 0; row < 8; row++) {
                 for (int col = 0; col < 8; col++) {
-                    Rectangle rect = new Rectangle(squareSize, squareSize, squareSize, squareSize);
-
-                    if (white) {
-                        rect.setFill(Color.rgb(251, 243, 228));
-                    } else {
-                        rect.setFill(fieldColor);
-
-                    }
-
+                    boardGridPane.add(prostokat(white,col,row), col, row);
                     white = !white;
 
-                    String id = positionToString(col,row);
-                    rect.setId(id);
-                    rect.setOnMousePressed(event -> rectanglePressed(event, rect));
-                    boardGridPane.add(rect, col, row);
                 }
                 white = !white;
             }
+
     }
 
     public Rectangle getRectangleAt(int x, int y) {
@@ -236,9 +242,11 @@ public class GameWindowController implements Initializable {
         return stackPane;
     }
 
+
     public void aktualizujBoarda(String[] board) {
         Platform.runLater(() -> {
             pawnsGridPane.getChildren().clear();
+            boolean white = true;
 
             for (int row = 0; row < 8; row++) {
                 String[] arr = board[row].split(" ");
@@ -246,8 +254,6 @@ public class GameWindowController implements Initializable {
                 for (int col = 0; col < 8; col++) {
                     System.out.print(arr[col] + " ");
                     String piece = arr[col];
-                    if (!"NULL".equals(piece)) {
-
                         switch (piece) {
                             case "W":
                                 pawnsGridPane.add(kolo(Color.WHITE, false, col, row), col, row);
@@ -261,8 +267,11 @@ public class GameWindowController implements Initializable {
                             case "CQ":
                                 pawnsGridPane.add(kolo(Color.DARKGRAY, true, col, row), col, row);
                                 break;
+                            //case "NULL":
+                                //pawnsGridPane.add(prostokat(white))
                         }
-                    }
+
+                        white = !white;
                 }
                 System.out.println();
             }
@@ -281,6 +290,31 @@ public class GameWindowController implements Initializable {
             }
             pawn = !pawn;
         }
+
+        /*
+        boolean white = false;
+        for (int row = 3; row<5; row++){
+            for (int col = 0; col<8; col++){
+                Rectangle rect = new Rectangle(squareSize, squareSize, squareSize, squareSize);
+
+                if (white) {
+                    rect.setFill(Color.rgb(251, 243, 228));
+                } else {
+                    rect.setFill(fieldColor);
+
+                }
+
+                white = !white;
+
+                String id = positionToString(col,row);
+                rect.setId(id);
+                rect.setOnMouseClicked(event -> rectanglePressed(event, rect));
+                pawnsGridPane.add(rect, col, row);
+            }
+            white = !white;
+        }
+
+         */
 
         for (int row = 5; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
@@ -379,6 +413,8 @@ public class GameWindowController implements Initializable {
 
 
 
+                        pawnsGridPane.setMouseTransparent(true);
+
                         // 4. wysłanie wybranego ruchu na serwer (jeżeli czas sie skończył to "END")
                         // rectanglePressed
                         while(this.chosenField.equals("NULL")){
@@ -392,6 +428,13 @@ public class GameWindowController implements Initializable {
                             started = "NO";
                             break;
                         }
+
+                        for (String id : mozliweRuchy){
+                            String rectId = "#" + id;
+                            Rectangle rec = (Rectangle) boardGridPane.lookup(rectId);
+                            rec.setFill(fieldColor);
+                        }
+                        pawnsGridPane.setMouseTransparent(false);
 
                         // 5. odebranie aktualizacji tablicy z serwera
                         dlugoscTablicy = in.readLine();
