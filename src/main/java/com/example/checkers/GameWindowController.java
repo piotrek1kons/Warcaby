@@ -61,7 +61,12 @@ public class GameWindowController implements Initializable {
     private Color pickedPawn = Color.rgb(85, 156, 173);
 
 
-    private User user = new User("test",1,2,3);
+    private User user;
+
+    public void setUser2(User user) {
+        this.user = user;
+        username1Label.setText(user.getUsername());
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -283,18 +288,19 @@ public class GameWindowController implements Initializable {
             out.newLine();
             out.flush();
 
-            // TODO wątek uruchamiający zegar
-            // TODO zegar odlicza do zera
-            // TODO uruchamia się tuż przed przed pobraniem danych użytkownika
-            // TODO zatrzymuje się po wysłaniu ruchu do serwera
-            // TODO kiedy zegar dojdzie do zera wysyła info do serwera że gra zakończona
-            // TODO serwer powinien wyzerować użytkownikowi wszystkie punkty żeby na pewno przegrał
+            String player2 = in.readLine();
+            Platform.runLater(() -> this.username2Label.setText(player2));
+            out.write("OK");
+            out.newLine();
+            out.flush();
 
             while (cont) {
                 // oczekiwanie na swoją kolej
                 started = in.readLine();
                 System.out.println("Odebrano START");
                 System.out.println(started);
+
+
                 while (started.equals("START")) {
 
                     Platform.runLater(() -> this.whichPlayerLabel.setText("Your turn"));
@@ -310,9 +316,6 @@ public class GameWindowController implements Initializable {
                         aktualizujBoarda(board);
                     }
 
-            /*
-                    TODO uruchomienie zegara
-             */
                     this.ct.resume();
 
                     // 2. wysłanie wybranego pionka na serwer (CH;Y) (jeżeli czas sie skończył to "END")

@@ -37,7 +37,7 @@ public class MainWindowController implements Initializable {
        startGameButton.setOnAction(new EventHandler<ActionEvent>(){     //obsługa przycisku rozpoczecia gry
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "GameWindowGUI.fxml", "Game!");
+                DBUtils.changeSceneUser2(event, "GameWindowGUI.fxml", "Game!",user);
             }
        });
 

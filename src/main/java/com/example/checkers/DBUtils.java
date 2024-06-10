@@ -38,5 +38,21 @@ public class DBUtils {
             e.printStackTrace();
         }
     }
+
+    public static void changeSceneUser2(ActionEvent event, String fxmlFile, String title, User user) {
+        try {
+            FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
+            Parent root = loader.load();
+
+            GameWindowController gameWindowController = loader.getController();
+            gameWindowController.setUser2(user);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     //public static void signUpUser(ActionEvent event, String username, String password, String )
 }

@@ -10,24 +10,26 @@ public class Game implements Callable<Boolean>  {
 
     public Game(RuchGraczaThread player1, RuchGraczaThread player2){
         ServerCondition sc = new ServerCondition(new Board());
+        Exchanger<String> exchanger = new Exchanger<>();
+
         this.player1 = player1;
         this.player2 = player2;
 
         player1.setServerCondition(sc);
         player2.setServerCondition(sc);
 
+        player1.setExchanger(exchanger);
+        player2.setExchanger(exchanger);
+
         player1.setIsWhite(true);
         player2.setIsWhite(false);
     }
     public Boolean call(){
-        System.out.println("start call");
         ExecutorService exec = Executors.newFixedThreadPool(2);
 
         final Player[] playersResult = new Player[2];
-        System.out.println("create play");
 
         try {
-            System.out.println("starting wątek");
             exec.submit(new FutureTask<>(player1){
                 protected void done(){
                     try{
@@ -41,8 +43,6 @@ public class Game implements Callable<Boolean>  {
             });
 
             Thread.sleep(100);
-
-            System.out.println("starting drugi wątek");
             exec.submit(new FutureTask<>(player2){
                 protected void done(){
                     try{

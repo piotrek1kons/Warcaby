@@ -4,9 +4,11 @@ import java.net.Socket;
 import java.util.Map;
 import java.util.Vector;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Exchanger;
 
 public class RuchGraczaThread implements Callable<Player> {
     private ServerCondition serverCondition;
+    private Exchanger<String> exchanger;
     private Player player;
     private Socket socket;
     private BufferedReader in;
@@ -29,20 +31,27 @@ public class RuchGraczaThread implements Callable<Player> {
     @Override
     public Player call() throws Exception {
 
-        System.out.println("czeka na dane uzytkownika");
         // TODO pobranie od klienta loginu i hasła gracza i utworzenie obiektu użytkownika
         String[] daneUzytkownika = in.readLine().split(";");
-        System.out.println("wczytano dane uzytkownika");
+        try{
+            String player2nlogin = exchanger.exchange(daneUzytkownika[0]);
+
+            out.write(player2nlogin);
+            out.newLine();
+            out.flush();
+
+            String ask = in.readLine();
+
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
 
         player  = new Player(new User(daneUzytkownika[0], Integer.parseInt(daneUzytkownika[1]), Integer.parseInt(daneUzytkownika[2]), Integer.parseInt(daneUzytkownika[3])),isWhite);
-        System.out.println("tworzy obiekt uzytkownika uzytkownika");
         // TODO gra się zakończy gdy gracz otrzyma max punktów lub upłynie czas poświęcony na grę
         boolean isGameOn = true;
 
         while (isGameOn){
-            System.out.println("wchodzi w gre");
             isGameOn = serverCondition.wykonajRuch(in, out, player);
-            System.out.println("skonczylo grac");
         }
 
         return player;
@@ -52,10 +61,19 @@ public class RuchGraczaThread implements Callable<Player> {
     public void setServerCondition(ServerCondition sc){
         this.serverCondition = sc;
     }
+
+    public void setExchanger(Exchanger<String> exchanger) {
+        this.exchanger = exchanger;
+    }
+
     public void setBoard(Board b){
         this.board = b;
     }
     public void setIsWhite(Boolean isWhite){
         this.isWhite = isWhite;
+    }
+
+    public  String getPlayer(){
+        return player.getUser().getUsername();
     }
 }

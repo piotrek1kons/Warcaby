@@ -227,12 +227,12 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label alignment="CENTER" layoutX="31.0" layoutY="220.0" prefHeight="66.0" prefWidth="194.0" text="Player 1" textFill="#fbf3e4">
+            <Label alignment="CENTER" layoutX="31.0" layoutY="220.0" prefHeight="66.0" prefWidth="194.0" text="You" textFill="#fbf3e4">
                <font>
                   <Font name="Cooper Black" size="45.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="31.0" layoutY="383.0" prefHeight="66.0" prefWidth="194.0" text="Player 2" textFill="#fbf3e4">
+            <Label alignment="CENTER" layoutX="31.0" layoutY="383.0" prefHeight="66.0" prefWidth="194.0" text="Other player" textFill="#fbf3e4">
                <font>
                   <Font name="Cooper Black" size="45.0" />
                </font>
