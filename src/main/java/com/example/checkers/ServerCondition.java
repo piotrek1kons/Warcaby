@@ -88,51 +88,66 @@ public class ServerCondition {
             y = Integer.parseInt(odpowiedz[1]);
 
             // wykonanie ruchu
-            board = f.getPawn().move(ch,y,board);
+            Pair<Board,Boolean> para = f.getPawn().move(ch,y,board);
+            board = para.getFirst();
 
             // wysłanie aktualizacji tablicy
             msg = boardToString();
             wyslanieTablicy(msg, out, in);
 
             // sprawdzenie czy jest możliwy kolejny ruch
-            f = b.get(ch).get(y);
-            nextMove = f.getPawn().nextMove(true, board);
-
-            while (nextMove != null){
-                out.write("NEXT");  // poinformowanie klienta o możliwości następnego ruchu
+            if(!para.getSecond()){
+                out.write("STOP");  // koniec ruchu użytkownika
                 out.newLine();
                 out.flush();
-
-                // wysłanie listy do klienta
-                wyslanieTablicy(nextMove, out, in);
-
-                // odebranie nowego ruchu od klienta
-                odpowiedz = in.readLine().split(";");  // CH;Y
-                if (odpowiedz[0].equals("NULL")){
-                    isGameOn = false;
-                    p.resetPoints();
-                    return false;
-                }
-                ch = odpowiedz[0].charAt(0);
-                y = Integer.parseInt(odpowiedz[1]);
-
-                // wykonanie ruchu
-                board = f.getPawn().move(ch,y,board);
-
-                // wysłanie aktualizacji tablicy
-                msg = boardToString();
-                wyslanieTablicy(msg, out, in);
-
-                // sprawdzenie czy jest możliwy kolejny ruch
+            }else{
                 f = b.get(ch).get(y);
                 nextMove = f.getPawn().nextMove(true, board);
 
+                while (nextMove != null){
+                    out.write("NEXT");  // poinformowanie klienta o możliwości następnego ruchu
+                    out.newLine();
+                    out.flush();
+
+                    // wysłanie listy do klienta
+                    wyslanieTablicy(nextMove, out, in);
+
+                    // odebranie nowego ruchu od klienta
+                    odpowiedz = in.readLine().split(";");  // CH;Y
+                    if (odpowiedz[0].equals("NULL")){
+                        isGameOn = false;
+                        p.resetPoints();
+                        return false;
+                    }
+                    ch = odpowiedz[0].charAt(0);
+                    y = Integer.parseInt(odpowiedz[1]);
+
+                    // wykonanie ruchu
+                    para = f.getPawn().move(ch,y,board);
+                    board = para.getFirst();
+
+                    // wysłanie aktualizacji tablicy
+                    msg = boardToString();
+                    wyslanieTablicy(msg, out, in);
+
+                    // sprawdzenie czy jest możliwy kolejny ruch
+                    if(!para.getSecond()){
+                        out.write("STOP");  // koniec ruchu użytkownika
+                        out.newLine();
+                        out.flush();
+                        break;
+                    }else{
+                        f = b.get(ch).get(y);
+                        nextMove = f.getPawn().nextMove(true, board);
+                    }
+                }
             }
 
+
             // jeśli nie ma ruchu -> idzie dalej
-            out.write("STOP");  // koniec ruchu użytkownika
-            out.newLine();
-            out.flush();
+//            out.write("STOP");  // koniec ruchu użytkownika
+//            out.newLine();
+//            out.flush();
 
             // TODO flaga zmienia się w momencie jak gracz skończy wykonywać swój ruch
             doesSomeonePlay = false;

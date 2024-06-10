@@ -291,30 +291,7 @@ public class GameWindowController implements Initializable {
             pawn = !pawn;
         }
 
-        /*
-        boolean white = false;
-        for (int row = 3; row<5; row++){
-            for (int col = 0; col<8; col++){
-                Rectangle rect = new Rectangle(squareSize, squareSize, squareSize, squareSize);
 
-                if (white) {
-                    rect.setFill(Color.rgb(251, 243, 228));
-                } else {
-                    rect.setFill(fieldColor);
-
-                }
-
-                white = !white;
-
-                String id = positionToString(col,row);
-                rect.setId(id);
-                rect.setOnMouseClicked(event -> rectanglePressed(event, rect));
-                pawnsGridPane.add(rect, col, row);
-            }
-            white = !white;
-        }
-
-         */
 
         for (int row = 5; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
@@ -443,7 +420,7 @@ public class GameWindowController implements Initializable {
                     System.out.println("Odebrano aktualizacje tablicy");
                         if (board != null) {
                             aktualizujBoarda(board);
-                            Thread.sleep(10000);
+
                         }
 
                         // 6. if (serwer == NEXT) -> ... else if (serwer == STOP) -> ...

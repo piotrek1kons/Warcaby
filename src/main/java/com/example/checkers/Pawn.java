@@ -28,7 +28,8 @@ public class Pawn {
     // TODO ta funkcja poza ruchem powinna też wykonywać bicie pionków (jeżeli taka sytuacja zaistniała)
     // TODO możemy określić ile pkt gracz dostanie za zbicie pionka (maybe 10??) i na podstawie liczby punktów określimy
     // TODO kto wygrał w danej rundzie (max punktów -> gra się zakończy)
-    public Board move(Character ch, int y, Board board){
+    public Pair<Board,Boolean> move(Character ch, int y, Board board){
+        Boolean czyBicie = false;
         if (Math.abs(this.ch - ch) == 2 && Math.abs(this.y - y) == 2) {
             Character middleCh = (char) ((this.ch + ch) / 2);
             int middleY = (this.y + y) / 2;
@@ -36,6 +37,7 @@ public class Pawn {
                     board.getField(middleCh, middleY).getPawn().isWhite() != this.isWhite()) {
                 // Wykonaj bicie
                 board.getField(middleCh, middleY).getPawn().kill();
+                czyBicie = true;
             }
         }
         board.getField(this.ch, this.y).setPawn(null);
@@ -43,7 +45,7 @@ public class Pawn {
         this.ch = ch;
         this.y = y;
 
-        return board;
+        return new Pair<>(board, czyBicie);
     }
 
     // sprawdza czy pole jest wolne
@@ -67,8 +69,8 @@ public class Pawn {
         return true;
     }
 
-    public Character chIncerment(Character chp, int i){
-        return (chp == 1 ? chp++ : chp--);
+    public Character chIncerment(Character chp, int i, int increment){
+        return (i == 1 ? (char)(chp + increment) : (char)(chp - increment));
     }
 
     public String checkKill(Character chp, int yp, int increment, Board board){
@@ -76,12 +78,14 @@ public class Pawn {
 
             //koniec ruchu
         } else{
-            if (isOnBoard(chIncerment(ch,increment), yp + increment)) {
+            System.out.println(chIncerment(chp,increment,1) +";"+ yp + increment);
+            if (isOnBoard(chIncerment(chp,increment, 1), yp + increment)) {
+
                 //sprawdza czy pole jest wolne
-                if (isFieldFree(board.getField(chp, yp + increment))) {
+                if (isFieldFree(board.getField(chIncerment(chp,increment, 1), yp + increment))) {
                     //zabicie pionka
                     //podswietlenie pola
-                    return chp + ";" + (yp + increment);
+                    return chIncerment(chp,increment, 1) + ";" + (yp + increment);
                 } else {
                     //koniec ruchu
                 }
@@ -163,6 +167,9 @@ public class Pawn {
         String [] movesArray = new String[moves.size()];
         for(int i = 0; i < moves.size(); i++){
             movesArray[i] = moves.get(i);
+        }
+        if(moves.size() == 0){
+            return null;
         }
         // TODO jeśli nie ma następnego ruchu to niech zwróci NULL
         return movesArray;
