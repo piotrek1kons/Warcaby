@@ -378,7 +378,7 @@ public class GameWindowController implements Initializable {
                     czyKolejnyRuch = in.readLine();
                     System.out.println("Sprawdzono czy kolejny ruch jest możliwy -> " + czyKolejnyRuch);
 
-                    if (czyKolejnyRuch.equals("STOP")) {
+                    if (czyKolejnyRuch.equals("STOP") || czyKolejnyRuch.equals("NULL")) {
                         // TODO zatrzymanie zegara
                         started = "NO";
                         System.out.println("Zatrzymano:  " + started);

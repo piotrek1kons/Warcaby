@@ -77,29 +77,37 @@ public class Pawn {
 
     public String checkKill(Character chp, int yp, int increment, Board board){
         if(this.isWhite){
-            if (board.getField(chp, yp).getPawn().isWhite != this.isWhite) {
-                System.out.println(chIncerment(chp,increment,1) +";"+ yp + increment);
-                if (isOnBoard(chIncerment(chp,increment, 1), yp + increment)) {
-                    //sprawdza czy pole jest wolne
-                    if (isFieldFree(board.getField(chIncerment(chp,increment,1), yp + increment))) {
-                        //zabicie pionka
-                        //podswietlenie pola
-                        return chIncerment(chp,increment, 1) + ";" + (yp + increment);
+            Pawn p = board.getField(chp, yp).getPawn();
+            if (p != null){
+                if (p.isWhite != this.isWhite) {
+                    System.out.println(chIncerment(chp,increment,1) +";"+ (yp + increment));
+                    if (isOnBoard(chIncerment(chp,increment, 1), yp + increment)) {
+                        //sprawdza czy pole jest wolne
+                        if (isFieldFree(board.getField(chIncerment(chp,increment,1), yp + increment))) {
+                            //zabicie pionka
+                            //podswietlenie pola
+                            return chIncerment(chp,increment, 1) + ";" + (yp + increment);
+                        }
                     }
                 }
             }
+
         }else{
-            if (board.getField(chp, yp).getPawn().isWhite != this.isWhite) {
-                System.out.println(chIncerment(chp,increment,1) +";"+ yp + increment);
-                if (isOnBoard(chIncerment(chp,increment, 1), yp + increment)) {
-                    //sprawdza czy pole jest wolne
-                    if (isFieldFree(board.getField(chIncerment(chp,increment, 1), yp + increment))) {
-                        //zabicie pionka
-                        //podswietlenie pola
-                        return chIncerment(chp,increment, 1) + ";" + (yp + increment);
+            Pawn p = board.getField(chp, yp).getPawn();
+            if (p != null){
+                if (board.getField(chp, yp).getPawn().isWhite != this.isWhite) {
+                    System.out.println(chIncerment(chp,increment,1) +";"+ (yp + increment));
+                    if (isOnBoard(chIncerment(chp,increment, 1), yp + increment)) {
+                        //sprawdza czy pole jest wolne
+                        if (isFieldFree(board.getField(chIncerment(chp,increment, 1), yp + increment))) {
+                            //zabicie pionka
+                            //podswietlenie pola
+                            return chIncerment(chp,increment, 1) + ";" + (yp + increment);
+                        }
                     }
                 }
             }
+
         }
 
         return null;
