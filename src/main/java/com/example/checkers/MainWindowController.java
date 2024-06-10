@@ -14,8 +14,6 @@ public class MainWindowController implements Initializable {
     @FXML
     private Button startGameButton;
     @FXML
-    private Button settingsButton;
-    @FXML
     private Button logoutButton;
     @FXML
     private Label usernameLabel;   //nazwa użytkownika musi być zmieniona
@@ -40,13 +38,6 @@ public class MainWindowController implements Initializable {
                 DBUtils.changeScene(event, "GameWindowGUI.fxml", "Game!");
             }
        });
-
-        settingsButton.setOnAction(new EventHandler<ActionEvent>(){     //obsługa przycisku ustawien
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "SettingsWindowGUI.fxml", "Settings!");
-            }
-        });
 
         logoutButton.setOnAction(new EventHandler<ActionEvent>(){     //obsługa przycisku ustawien
             @Override
