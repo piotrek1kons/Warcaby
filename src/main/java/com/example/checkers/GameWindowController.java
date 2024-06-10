@@ -250,7 +250,7 @@ public class GameWindowController implements Initializable {
 
             for (int row = 0; row < 8; row++) {
                 String[] arr = board[row].split(" ");
-
+                System.out.println("ROW " + row + "-->\t");
                 for (int col = 0; col < 8; col++) {
                     System.out.print(arr[col] + " ");
                     String piece = arr[col];
@@ -438,10 +438,12 @@ public class GameWindowController implements Initializable {
 
                         // 5. odebranie aktualizacji tablicy z serwera
                         dlugoscTablicy = in.readLine();
-                        System.out.println("Odebrano aktualizacje tablicy");
+                    System.out.println("dlugosc tablicy: " + dlugoscTablicy);
                         board = odebranieTablicy(in, Integer.parseInt(dlugoscTablicy));
+                    System.out.println("Odebrano aktualizacje tablicy");
                         if (board != null) {
                             aktualizujBoarda(board);
+                            Thread.sleep(10000);
                         }
 
                         // 6. if (serwer == NEXT) -> ... else if (serwer == STOP) -> ...
