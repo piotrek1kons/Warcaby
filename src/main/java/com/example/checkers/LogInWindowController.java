@@ -55,7 +55,7 @@ public class LogInWindowController implements Initializable {
                         Integer wins = db.getDataInt("SELECT ilosc_wygranych FROM user where login like \"" + usernameTextField.getText() + "\";");
                         Integer losses = db.getDataInt("SELECT ilosc_przegranych FROM user where login like \"" + usernameTextField.getText() + "\";");
                         Integer draws = db.getDataInt("SELECT ilosc_remisow FROM user where login like \"" + usernameTextField.getText() + "\";");
-                        User user = new User(usernameTextField.getText(), wins, losses, draws);
+                        User user = new User(usernameTextField.getText(), wins,draws,losses);
                         DBUtils.changeSceneUser(event, "MainWindowGUI.fxml", "Game Window!", user);
                         db.closeConnection(db.getCon(), db.getSt());
                         //DBUtils.changeScene(event, "MainWindowGUI.fxml", "Main Window!");
