@@ -75,7 +75,7 @@ public class GameWindowController implements Initializable {
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "MainWindowGUI.fxml", "Main Window!");
+                DBUtils.changeSceneUser(event, "MainWindowGUI.fxml", "Main Window!",user);
             }
         });
 
