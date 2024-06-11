@@ -1,6 +1,7 @@
 package com.example.checkers;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.locks.Condition;
@@ -68,9 +69,9 @@ public class ServerCondition {
             Field f = b.get(ch).get(y);
             String[] nextMove = f.getPawn().nextMove(false, board);
             System.out.println("Utworzono tablice ruchow");
-            for(String s : nextMove){
-                System.out.println(s);
-            }
+            //for(String s : nextMove){
+            //    System.out.println(s);
+            //}
 
             // wysłanie listy do klienta
             wyslanieTablicy(nextMove, out, in);
@@ -94,9 +95,11 @@ public class ServerCondition {
 
             // wysłanie aktualizacji tablicy
             msg = boardToString();
+            System.out.println("PRZED WHILE wyslano tablice");
             wyslanieTablicy(msg, out, in);
 
             // sprawdzenie czy jest możliwy kolejny ruch
+            System.out.println("paraprzed " + para.getSecond());
             if(!para.getSecond()){
                 out.write("STOP");  // koniec ruchu użytkownika
                 out.newLine();
@@ -110,7 +113,9 @@ public class ServerCondition {
                 }
                 f = b.get(ch).get(y);
 
+                System.out.println("WHILE - czy istnieje pionek" + f.getPawn());
                 nextMove = f.getPawn().nextMove(true, board);
+                System.out.println("WHILE - co zwraca" + Arrays.toString(nextMove));
 
                 while (nextMove != null){
                     f = b.get(ch).get(y);
@@ -143,8 +148,10 @@ public class ServerCondition {
                     board = para.getFirst();
                     // wysłanie aktualizacji tablicy
                     msg = boardToString();
+                    System.out.println("WHILE wyslano tablice");
                     wyslanieTablicy(msg, out, in);
 
+                    System.out.println("parasecond: " + para.getSecond());
                     // sprawdzenie czy jest możliwy kolejny ruch
                     if(!para.getSecond()){
                         out.write("STOP");  // koniec ruchu użytkownika
@@ -195,9 +202,7 @@ public class ServerCondition {
         for (Character i='A'; i<=height; i++){
             for (int j=1; j<=width; j++){
                 Field f = b.get(i).get(j);
-                System.out.println(f.getPawn());
             }
-            System.out.println();
         }
 
         Field f;

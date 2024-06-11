@@ -76,6 +76,10 @@ public class Pawn {
     }
 
     public String checkKill(Character chp, int yp, int incrementch, int incrementY, Board board){
+        if (!isOnBoard(chp, yp)){
+            return null;
+        }
+
         if(this.isWhite){
             Pawn p = board.getField(chp, yp).getPawn();
             if (p != null){
@@ -132,30 +136,37 @@ public class Pawn {
         ArrayList<String> moves = new ArrayList<String>();
         String temp;
         int yp = getY();
-
+        System.out.println("xpp1");
         if(firstKill) {
+            System.out.println("xpp1.5");
+
             temp = checkKill((char)(chp - 1),yp - 1,-1, -1,board);
             if(temp != null){
                 moves.add(temp);
             }
+            System.out.println("xpp1.6");
 
             temp = checkKill((char)(chp - 1),yp + 1,-1, 1,board);
             if(temp != null){
                 moves.add(temp);
             }
+            System.out.println("xpp1.7");
 
             temp = checkKill((char)(chp + 1),yp - 1,1,-1,board);
             if(temp != null){
                 moves.add(temp);
             }
-
+            System.out.println("xpp1.");
             temp = checkKill((char)(chp + 1),yp + 1,1,1,board);
             if(temp != null){
                 moves.add(temp);
             }
+            System.out.println("xpp2");
+
 
         }else{
             if(isWhite){
+                System.out.println("xpp3");
                 temp = checkMove((char)(chp - 1),yp - 1,-1,-1,board);
                 if(temp != null){
                     moves.add(temp);
@@ -165,6 +176,7 @@ public class Pawn {
                     moves.add(temp);
                 }
             } else {
+                System.out.println("xpp4");
                 temp = checkMove((char)(chp + 1),yp - 1,1, -1,board);
                 if(temp != null){
                     moves.add(temp);
@@ -176,16 +188,19 @@ public class Pawn {
             }
 
         }
-
-
+        System.out.println("xpp5");
+        if(moves.isEmpty()){
+            return null;
+        }
+        for(int i = 0; i < moves.size(); i++){
+            System.out.printf("dupa: "+moves.get(i) + "\n");
+        }
 
         String [] movesArray = new String[moves.size()];
         for(int i = 0; i < moves.size(); i++){
             movesArray[i] = moves.get(i);
         }
-        if(moves.size() == 0){
-            return null;
-        }
+
         // TODO jeśli nie ma następnego ruchu to niech zwróci NULL
         return movesArray;
     }

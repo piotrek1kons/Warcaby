@@ -102,9 +102,9 @@ public class Board {
 
             for(int j = 0; j < width; j++){
                 if(temp.get(j+1) != null) {
-                    System.out.print((temp.get(j + 1).getPawn().isWhite() ? "W" : "B") + "\t");
+                   // System.out.print((temp.get(j + 1).getPawn().isWhite() ? "W" : "B") + "\t");
                 }else{
-                    System.out.print("n\t");
+                  //  System.out.print("n\t");
                 }
             }
             System.out.println();
