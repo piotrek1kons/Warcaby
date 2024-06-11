@@ -33,7 +33,7 @@ public class StartingWindowController implements Initializable
         logInButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "LogInWindowGUI.fxml", "Log InWelcome!");
+                DBUtils.changeScene(event, "LogInWindowGUI.fxml", "Log In!");
             }
         });
 

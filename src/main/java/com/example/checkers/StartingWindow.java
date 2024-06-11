@@ -15,7 +15,7 @@ public class StartingWindow extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(StartingWindow.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setScene(scene);
-        stage.setTitle("Warcaby celtyckie!");
+        stage.setTitle("Super Checkers");
         stage.setResizable(false);
         stage.show();
     }
