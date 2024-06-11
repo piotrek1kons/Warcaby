@@ -49,6 +49,7 @@ public class DBUtils {
             gameWindowController.setUser2(user);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle(title);
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {

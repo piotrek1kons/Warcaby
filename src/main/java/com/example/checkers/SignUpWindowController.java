@@ -54,7 +54,7 @@ public class SignUpWindowController implements Initializable {
                     User user = new User(usernameTextField.getText(), 0,0,0);
                     db.closeConnection(db.getCon(), db.getSt());
                     //xzczx
-                    DBUtils.changeSceneUser(event, "MainWindowGUI.fxml", "Main Window!", user);
+                    DBUtils.changeSceneUser(event, "MainWindowGUI.fxml", "Game Window!", user);
                 }else{
                     warningLabel.setText("Passwords do not match!");
                 }

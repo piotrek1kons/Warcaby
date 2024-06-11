@@ -45,9 +45,6 @@ public class DataBase {
             }
             if(this.executeUpdate(st,"USE " + dbName + ";") == 0) {
                 System.out.println("Użyto bazy " + dbName);
-                if(this.executeUpdate(st,"CREATE TABLE game (id_rozgrywki int not null, login1 varchar(50) not null, login2 varchar(50) not null, wygrany varchar(50) not null);") == 0) {
-                    System.out.println("Utworzono tabelę game");
-                }
                 if(this.executeUpdate(st,"CREATE TABLE user (login varchar(50) not null, haslo varchar(50) not null, ilosc_wygranych int, ilosc_przegranych int, ilosc_remisow int);") == 0) {
                     System.out.println("Utworzono tabelę user");
                 }
