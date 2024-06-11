@@ -102,6 +102,12 @@ public class ServerCondition {
                 out.newLine();
                 out.flush();
             }else{
+                // dodawanie punktów
+                p.addPoints(1);
+                if (p.getPoints() == 12){
+                    isGameOn = false;
+                    return false;
+                }
                 f = b.get(ch).get(y);
 
                 nextMove = f.getPawn().nextMove(true, board);
