@@ -75,18 +75,18 @@ public class Pawn {
         return (i == 1 ? (char)(chp + increment) : (char)(chp - increment));
     }
 
-    public String checkKill(Character chp, int yp, int increment, Board board){
+    public String checkKill(Character chp, int yp, int incrementch, int incrementY, Board board){
         if(this.isWhite){
             Pawn p = board.getField(chp, yp).getPawn();
             if (p != null){
                 if (p.isWhite != this.isWhite) {
-                    System.out.println(chIncerment(chp,increment,1) +";"+ (yp + increment));
-                    if (isOnBoard(chIncerment(chp,increment, 1), yp + increment)) {
+                    System.out.println(chIncerment(chp,incrementch,1) +";"+ (yp + incrementY));
+                    if (isOnBoard(chIncerment(chp,incrementch, 1), yp + incrementY)) {
                         //sprawdza czy pole jest wolne
-                        if (isFieldFree(board.getField(chIncerment(chp,increment,1), yp + increment))) {
+                        if (isFieldFree(board.getField(chIncerment(chp,incrementch,1), yp + incrementY))) {
                             //zabicie pionka
                             //podswietlenie pola
-                            return chIncerment(chp,increment, 1) + ";" + (yp + increment);
+                            return chIncerment(chp,incrementch, 1) + ";" + (yp + incrementY);
                         }
                     }
                 }
@@ -96,13 +96,11 @@ public class Pawn {
             Pawn p = board.getField(chp, yp).getPawn();
             if (p != null){
                 if (board.getField(chp, yp).getPawn().isWhite != this.isWhite) {
-                    System.out.println(chIncerment(chp,increment,1) +";"+ (yp + increment));
-                    if (isOnBoard(chIncerment(chp,increment, 1), yp + increment)) {
+                    System.out.println(chIncerment(chp,incrementch,1) +";"+ (yp + incrementY));
+                    if (isOnBoard(chIncerment(chp,incrementch, 1), yp + incrementY)) {
                         //sprawdza czy pole jest wolne
-                        if (isFieldFree(board.getField(chIncerment(chp,increment, 1), yp + increment))) {
-                            //zabicie pionka
-                            //podswietlenie pola
-                            return chIncerment(chp,increment, 1) + ";" + (yp + increment);
+                        if (isFieldFree(board.getField(chIncerment(chp,incrementch, 1), yp + incrementY))) {
+                            return chIncerment(chp,incrementch, 1) + ";" + (yp + incrementY);
                         }
                     }
                 }
@@ -113,7 +111,7 @@ public class Pawn {
         return null;
     }
 
-    public String checkMove(Character chp, int yp, int increment, Board board){
+    public String checkMove(Character chp, int yp, int increment, int incrementY, Board board){
         //sprawdza czy pole znajduje sie na planszy
         if(isOnBoard(chp, yp)) {
             //sprawdza czy pole jest wolne
@@ -121,7 +119,7 @@ public class Pawn {
                 System.out.println(chp + ";" + yp);
                 return chp + ";" + yp;
             } else {
-                return checkKill(chp,yp,increment,board);
+                return checkKill(chp,yp,increment,incrementY, board);
             }
         }
         return null;
@@ -136,42 +134,42 @@ public class Pawn {
         int yp = getY();
 
         if(firstKill) {
-            temp = checkKill((char)(chp - 1),yp - 1,-1,board);
+            temp = checkKill((char)(chp - 1),yp - 1,-1, -1,board);
             if(temp != null){
                 moves.add(temp);
             }
 
-            temp = checkKill((char)(chp - 1),yp + 1,1,board);
+            temp = checkKill((char)(chp - 1),yp + 1,-1, 1,board);
             if(temp != null){
                 moves.add(temp);
             }
 
-            temp = checkKill((char)(chp + 1),yp - 1,-1,board);
+            temp = checkKill((char)(chp + 1),yp - 1,1,-1,board);
             if(temp != null){
                 moves.add(temp);
             }
 
-            temp = checkKill((char)(chp + 1),yp + 1,1,board);
+            temp = checkKill((char)(chp + 1),yp + 1,1,1,board);
             if(temp != null){
                 moves.add(temp);
             }
 
         }else{
             if(isWhite){
-                temp = checkMove((char)(chp - 1),yp - 1,-1,board);
+                temp = checkMove((char)(chp - 1),yp - 1,-1,-1,board);
                 if(temp != null){
                     moves.add(temp);
                 }
-                temp = checkMove((char)(chp - 1),yp + 1,1,board);
+                temp = checkMove((char)(chp - 1),yp + 1,-1, 1,board);
                 if(temp != null){
                     moves.add(temp);
                 }
-            }else {
-                temp = checkMove((char)(chp + 1),yp - 1,-1,board);
+            } else {
+                temp = checkMove((char)(chp + 1),yp - 1,1, -1,board);
                 if(temp != null){
                     moves.add(temp);
                 }
-                temp = checkMove((char)(chp + 1),yp + 1,1,board);
+                temp = checkMove((char)(chp + 1),yp + 1,1,1,board);
                 if(temp != null){
                     moves.add(temp);
                 }

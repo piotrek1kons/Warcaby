@@ -6,6 +6,7 @@ module com.example.warcaby {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
+    requires mysql.connector.j;
 
     opens com.example.checkers to javafx.fxml;
     exports com.example.checkers;

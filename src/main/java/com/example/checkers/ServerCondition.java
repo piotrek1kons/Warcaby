@@ -8,7 +8,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ServerCondition {
-    private Lock lock = new ReentrantLock();
+    private Lock lock = new ReentrantLock(true);
     private Condition player = lock.newCondition();
     private boolean doesSomeonePlay = false;
     private Board board;
@@ -18,6 +18,7 @@ public class ServerCondition {
     public ServerCondition(Board board){
         this.board = board;
     }
+
 
     // TODO
     public boolean wykonajRuch(BufferedReader in, BufferedWriter out, Player p){
@@ -47,6 +48,8 @@ public class ServerCondition {
 
             // TODO serwer pobiera ruch od klienta
             // wybranie pionka do ruszenia
+
+
             String[] odpowiedz = in.readLine().split(";");  // CH;Y
             System.out.println("Odebrano wybór pionka " + odpowiedz[0] + "  " + odpowiedz[1]);
 
@@ -100,9 +103,18 @@ public class ServerCondition {
                 out.flush();
             }else{
                 f = b.get(ch).get(y);
+
                 nextMove = f.getPawn().nextMove(true, board);
 
                 while (nextMove != null){
+                    f = b.get(ch).get(y);
+                    nextMove = f.getPawn().nextMove(true, board);
+                    if(nextMove == null){
+                        out.write("STOP");
+                        out.newLine();
+                        out.flush();
+                        break;
+                    }
                     out.write("NEXT");  // poinformowanie klienta o możliwości następnego ruchu
                     out.newLine();
                     out.flush();
@@ -123,7 +135,6 @@ public class ServerCondition {
                     // wykonanie ruchu
                     para = f.getPawn().move(ch,y,board);
                     board = para.getFirst();
-
                     // wysłanie aktualizacji tablicy
                     msg = boardToString();
                     wyslanieTablicy(msg, out, in);
@@ -134,19 +145,18 @@ public class ServerCondition {
                         out.newLine();
                         out.flush();
                         break;
-                    }else{
-                        f = b.get(ch).get(y);
-                        nextMove = f.getPawn().nextMove(true, board);
                     }
                 }
             }
 
+            out.write("STOP");  // koniec ruchu użytkownika
+            out.newLine();
+            out.flush();
+
             // TODO flaga zmienia się w momencie jak gracz skończy wykonywać swój ruch
             doesSomeonePlay = false;
             player.signal();
-
             return true;
-
 
         } catch (Exception e) {
             throw new RuntimeException(e);

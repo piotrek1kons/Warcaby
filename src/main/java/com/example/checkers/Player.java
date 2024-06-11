@@ -36,4 +36,8 @@ public class Player {
     public User getUser(){
         return user;
     }
+    public String isWhite(){
+        if(isWhite) return "black";
+        else return "white";
+    }
 }

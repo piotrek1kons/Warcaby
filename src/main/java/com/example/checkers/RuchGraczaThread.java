@@ -39,7 +39,6 @@ public class RuchGraczaThread implements Callable<Player> {
             out.write(player2nlogin);
             out.newLine();
             out.flush();
-
             String ask = in.readLine();
 
         } catch (InterruptedException e){
@@ -47,11 +46,22 @@ public class RuchGraczaThread implements Callable<Player> {
         }
 
         player  = new Player(new User(daneUzytkownika[0], Integer.parseInt(daneUzytkownika[1]), Integer.parseInt(daneUzytkownika[2]), Integer.parseInt(daneUzytkownika[3])),isWhite);
+
+        if (player.isWhite().equals("black")){
+            Thread.sleep(100);
+        }
+
+        System.out.println("GRACZ DOSTAJE KOLOR" + player.isWhite());
+        out.write(player.isWhite());
+        out.newLine();
+        out.flush();
         // TODO gra się zakończy gdy gracz otrzyma max punktów lub upłynie czas poświęcony na grę
         boolean isGameOn = true;
 
         while (isGameOn){
+
             isGameOn = serverCondition.wykonajRuch(in, out, player);
+
         }
 
         return player;
@@ -72,7 +82,9 @@ public class RuchGraczaThread implements Callable<Player> {
     public void setIsWhite(Boolean isWhite){
         this.isWhite = isWhite;
     }
-
+    public boolean getIsWhite(){
+        return isWhite;
+    }
     public  String getPlayer(){
         return player.getUser().getUsername();
     }

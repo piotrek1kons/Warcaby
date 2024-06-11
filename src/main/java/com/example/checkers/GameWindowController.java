@@ -49,6 +49,7 @@ public class GameWindowController implements Initializable {
     Thread th;
     ClockThread ct;
 
+    String playerColor;
 
     // --------
     private String chosenPawn = "NULL", chosenField = "NULL";
@@ -173,25 +174,36 @@ public class GameWindowController implements Initializable {
     // ONMOUSE EVENTS - CIRCLE
     public void circlePressed(MouseEvent event, int x, int y, Circle circle){
         System.out.print("\n-->" + this.chosenPawn);
-        try {
-            if (timeStop) {
-                out.write("NULL;NULL");
-                out.newLine();
-                out.flush();
-            } else {
-                thisField = getRectangleAt(x,y);
-                this.chosenPawn = thisField.getId();
-                System.out.print(this.chosenPawn);
-                circle.setFill(pickedPawn);
+        System.out.println(playerColor);
 
-                out.write(this.chosenPawn);
-                out.newLine();
-                out.flush();
-            }
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Color c;
+        if (playerColor.equals("white")) {
+            c = Color.WHITE;
+        }else{
+            c = Color.BLACK;
         }
+
+        System.out.println(circle.getFill());
+       if(circle.getFill() ==  c && (this.started.equals("START"))){
+           try {
+               if (timeStop) {
+                   out.write("NULL;NULL");
+                   out.newLine();
+                   out.flush();
+               } else {
+                   thisField = getRectangleAt(x,y);
+                   this.chosenPawn = thisField.getId();
+                   System.out.print(this.chosenPawn);
+                   circle.setFill(pickedPawn);
+                   out.write(this.chosenPawn);
+                   out.newLine();
+                   out.flush();
+               }
+           } catch (IOException e) {
+               throw new RuntimeException(e);
+           }
+       }
+
 
     }
 
@@ -288,12 +300,15 @@ public class GameWindowController implements Initializable {
             out.newLine();
             out.flush();
 
+
             String player2 = in.readLine();
             Platform.runLater(() -> this.username2Label.setText(player2));
+
             out.write("OK");
             out.newLine();
             out.flush();
 
+            playerColor = in.readLine();
             while (cont) {
                 // oczekiwanie na swoją kolej
                 started = in.readLine();
@@ -309,6 +324,8 @@ public class GameWindowController implements Initializable {
                     // oddzielone spacjami ; W->biały ; B->czarny ; WQ->biała królowa ; BQ->czarna królowa ; NULL->puste pole
 
                     String dlugoscTablicy = in.readLine();
+                    System.out.println("dlugosc tablicy: " + dlugoscTablicy);
+                    // tu sie odbiera giga gowno przy podwojnym biciu
                     board = odebranieTablicy(in, Integer.parseInt(dlugoscTablicy));
                     System.out.println("Odebrano aktualizację tablicy");
 
@@ -377,14 +394,72 @@ public class GameWindowController implements Initializable {
                     System.out.println("Odebrano aktualizacje tablicy");
                     if (board != null) {
                         aktualizujBoarda(board);
-
                     }
 
                     // 6. if (serwer == NEXT) -> ... else if (serwer == STOP) -> ...
-                    // 7. jeśli NEXT: wraca do pkt. 1
+                    // 7. jeśli NEXT: wraca do pkt.
                     // 8. w przeciwnym razie czeka na swoją kolej i też wraca do pkt 1
+                    boolean initial = false;
                     czyKolejnyRuch = in.readLine();
                     System.out.println("Sprawdzono czy kolejny ruch jest możliwy -> " + czyKolejnyRuch);
+                    while(czyKolejnyRuch.equals("NEXT")){
+                        if(initial) {
+                            czyKolejnyRuch = in.readLine();
+                            System.out.println("Sprawdzono czy kolejny ruch jest możliwy 2+ -> " + czyKolejnyRuch);
+                            if(czyKolejnyRuch.equals("STOP")) {
+                                break;
+                            }
+                        }
+                        initial = true;
+                        // 3. pobranie tablicy możliwych ruchów
+                        dlugoscTablicy = in.readLine();
+                        System.out.println("3. odebrano dlugoscTablicy" + dlugoscTablicy);
+
+                        if (dlugoscTablicy.equals("NULL") || dlugoscTablicy == null) {
+                            started = "NO";
+                            break;
+                        } else {
+                            mozliweRuchy = odebranieTablicy(in, Integer.parseInt(dlugoscTablicy));
+                            for (String id : mozliweRuchy) {
+                                String rectId = "#" + id;
+                                Rectangle rec = (Rectangle) boardGridPane.lookup(rectId);
+                                rec.setFill(fieldColorHighligh);
+                            }
+                        }
+
+                        pawnsGridPane.setMouseTransparent(true);
+
+                        // 4. wysłanie wybranego ruchu na serwer (jeżeli czas sie skończył to "END")
+                        // rectanglePressed
+                        while (this.chosenField.equals("NULL")) {
+                            Thread.sleep(500);
+                        }
+                        this.chosenField = "NULL";
+
+                        if (timeStop) {
+                            cont = false;
+                            started = "NO";
+                            break;
+                        }
+
+                        for (String id : mozliweRuchy) {
+                            String rectId = "#" + id;
+                            Rectangle rec = (Rectangle) boardGridPane.lookup(rectId);
+                            rec.setFill(fieldColor);
+                        }
+                        pawnsGridPane.setMouseTransparent(false);
+
+                        // 5. odebranie aktualizacji tablicy z serwera
+                        dlugoscTablicy = in.readLine();
+                        System.out.println("5. dlugosc tablicy: " + dlugoscTablicy);
+                        board = odebranieTablicy(in, Integer.parseInt(dlugoscTablicy));
+                        System.out.println("Odebrano aktualizacje tablicy");
+
+                        if (board != null) {
+                            aktualizujBoarda(board);
+                        }
+
+                    }
 
                     if (czyKolejnyRuch.equals("STOP") || czyKolejnyRuch.equals("NULL")) {
                         // TODO zatrzymanie zegara
@@ -393,7 +468,6 @@ public class GameWindowController implements Initializable {
                         System.out.println("Zatrzymano:  " + started);
                         break;
                     }
-
                     mozliweRuchy = null;
                 }
 
